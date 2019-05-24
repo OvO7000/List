@@ -1,0 +1,25 @@
+{
+  "name": "list",
+  "version": "0.1.0",
+  "description": "一个记录工具",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OvO7000/List.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "OvO7000",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OvO7000/List/issues"
+  },
+  "homepage": "https://github.com/OvO7000/List#readme"
+}
