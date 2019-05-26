@@ -1,3 +1,7 @@
+const path = require('path')
+const resolve = dir => path.join(__dirname, dir)
+
+
 module.exports = {
   baseUrl: process.env.NODE_ENV === 'production' ? '/' : '/',
   outputDir: 'dist',
@@ -5,8 +9,8 @@ module.exports = {
   filenameHashing: true,
   pages: {
     index: {
-      entry: 'src/pages/index/index.js',
-      template: 'src/pages/index/index.html',
+      entry: 'src/main.js',
+      template: 'public/index.html',
       filename: 'index.html',
       title: 'List', // 需设置public/index.html的title标签
       chunks: ['chunk-vendors', 'chunk-common', 'index']
@@ -19,6 +23,13 @@ module.exports = {
   configureWebpack: (config) => {
   },
   chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@', resolve('src'))
+      .set('assets', resolve('src/assets'))
+      .set('components', resolve('src/components'))
+      .set('views', resolve('src/views'))
+      .set('routers', resolve('src/routers'))
+      .set('styles', resolve('src/style'))
   },
   css: {
     modules: false,
