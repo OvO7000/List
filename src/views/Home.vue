@@ -1,23 +1,16 @@
 <template>
   <div class="home">
-    <span>test</span>
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-    </ul>
-    <input type="text" placeholder="test">
-    <hello-world></hello-world>
+    <Header></Header>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+import Header from 'components/Header.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    Header
   }
 }
 </script>
