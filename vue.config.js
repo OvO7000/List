@@ -3,7 +3,7 @@ const resolve = dir => path.join(__dirname, dir)
 
 
 module.exports = {
-  baseUrl: process.env.NODE_ENV === 'production' ? '/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   filenameHashing: true,

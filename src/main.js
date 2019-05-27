@@ -7,11 +7,13 @@ import './registerServiceWorker'
 import 'normalize.css'
 import 'styles/base.styl'
 import 'styles/reset.styl'
+import 'styles/variables.styl'
+import 'styles/mixins.styl'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faCrow } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCoffee)
+library.add(faCrow)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
