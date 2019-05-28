@@ -1,24 +1,24 @@
 <template>
   <div class="header">
-    <div class="headContainer">
+    <div class="headContainer"  @click="toogleMenu">
       <div class="icon">
         <font-awesome-icon :icon="status" class="status" />
       </div>
     </div>
-    <div class="menu">
-      <div class="menuContainer">
-        <ul>
-          <li v-for="item in list1" :key="item.id"><a href="#">{{item.name}}</a></li>
-          <li><a href="#"></a></li>
-          <li v-for="item in list2" :key="item.id"><a href="#">{{item.name}}</a></li>
-          <li>
-            <div class="search">
+    <transition name="slide">
+      <div class="menu" v-show="showMenu">
+        <div class="menuContainer">
+          <ul>
+            <li v-for="item in list1" :key="item.id" class="menuItem"><a href="#">{{item.name}}</a></li>
+            <li  class="space"></li>
+            <li v-for="item in list2" :key="item.id" class="menuItem"><a href="#">{{item.name}}</a></li>
+            <li class="search">
               <input type="text">
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -30,6 +30,8 @@ export default {
   },
   data: () => {
     return {
+      showMenu: false,
+      showInput: false,
       list1: [
         {
           id: 'a1',
@@ -55,6 +57,11 @@ export default {
   computed: {
     status: () => {
       return 'crow'
+    }
+  },
+  methods: {
+    toogleMenu: function () {
+      this.showMenu = !this.showMenu
     }
   }
 }
@@ -82,10 +89,34 @@ export default {
       height: 30px
       text-align: center
       line-height: 30px
-      vertical-align: middle
       cursor: pointer
-      background: #fff
       .status
+        vertical-align: middle
         font-size: 18px
-        color: $mainColor
+  .menu
+    overflow: hidden
+    background: $menuBgColor
+    .menuContainer
+      width: 100%
+      .menuItem
+        padding-left: 10%
+        height: 40px
+        line-height: 40px
+        &:hover
+          background: $bgColor
+        a
+          font-size: 14px
+    .space
+      width: 100%
+      height: 40px
+    .search
+      padding-left: 10%
+      height: 40px
+      line-height: 40px
+      input
+        height: 20px
+        font-size: 14px
+        color: $fontColor
+        border-bottom: 1px solid $fontColor
+        background: $menuBgColor
 </style>

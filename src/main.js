@@ -9,6 +9,7 @@ import 'styles/base.styl'
 import 'styles/reset.styl'
 import 'styles/variables.styl'
 import 'styles/mixins.styl'
+import 'styles/animation.styl'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCrow } from '@fortawesome/free-solid-svg-icons'
