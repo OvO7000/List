@@ -1,8 +1,8 @@
 <template>
   <div class="header">
     <div class="headContainer"  @click="toogleMenu">
-      <div class="icon">
-        <font-awesome-icon :icon="status" class="status" />
+      <div class="icon" @click.stop="prompt">
+        <font-awesome-icon :icon="status" class="status" ref="status" />
       </div>
     </div>
     <transition-slide>
@@ -62,6 +62,12 @@ export default {
   methods: {
     toogleMenu: function () {
       this.showMenu = !this.showMenu
+    },
+    prompt: function () {
+      this.$refs.status.style.fontSize = '22px'
+      setTimeout(() => {
+        this.$refs.status.style.fontSize = '18px'
+      }, 100)
     }
   }
 }
