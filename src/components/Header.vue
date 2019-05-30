@@ -5,7 +5,7 @@
         <font-awesome-icon :icon="status" class="status" />
       </div>
     </div>
-    <transition name="slide">
+    <transition-slide>
       <div class="menu" v-show="showMenu">
         <div class="menuContainer">
           <ul>
@@ -18,7 +18,7 @@
           </ul>
         </div>
       </div>
-    </transition>
+    </transition-slide>
   </div>
 </template>
 
@@ -94,7 +94,7 @@ export default {
         vertical-align: middle
         font-size: 18px
   .menu
-    overflow: hidden
+    /*overflow: hidden*/
     background: $menuBgColor
     .menuContainer
       width: 100%
