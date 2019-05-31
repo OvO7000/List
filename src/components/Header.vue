@@ -2,16 +2,28 @@
   <div class="header">
     <div class="headContainer"  @click="toogleMenu">
       <div class="icon" @click.stop="prompt">
-        <font-awesome-icon :icon="status" class="status" ref="status" />
+        <font-awesome-icon :icon="status" class="status" />
       </div>
     </div>
     <transition-slide>
       <div class="menu" v-show="showMenu">
         <div class="menuContainer">
           <ul>
-            <li v-for="item in list1" :key="item.id" class="menuItem"><a href="#">{{item.name}}</a></li>
+            <router-link
+              tag="li"
+              :to="'/' + route.type + '/' + item.id"
+              v-for="item in subType[route.type]"
+              :key="item.id"
+              class="menuItem"
+            ><span>{{item.name}}</span></router-link>
             <li  class="space"></li>
-            <li v-for="item in list2" :key="item.id" class="menuItem"><a href="#">{{item.name}}</a></li>
+            <router-link
+              tag="li"
+              :to="'/' + excludeType + '/' + item.id"
+              v-for="item in subType[excludeType]"
+              :key="item.id"
+              class="menuItem"
+            ><span>{{item.name}}</span></router-link>
             <li class="search">
               <input type="text">
             </li>
@@ -23,6 +35,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'Header',
   props: {
@@ -31,32 +45,26 @@ export default {
   data: () => {
     return {
       showMenu: false,
-      showInput: false,
-      list1: [
-        {
-          id: 'a1',
-          name: '漫画'
-        },
-        {
-          id: 'a2',
-          name: '动画'
-        }
-      ],
-      list2: [
-        {
-          id: 1,
-          name: '漫画家'
-        },
-        {
-          id: 2,
-          name: '作家'
-        }
-      ]
+      showInput: false
     }
   },
   computed: {
-    status: () => {
+    ...mapState({
+      route: 'route',
+      type: 'type',
+      subType: 'subType'
+    }),
+    status () {
       return 'crow'
+    },
+    excludeType () {
+      let excludeType = ''
+      this.type.forEach(item => {
+        if (item !== this.route.type) {
+          excludeType = item
+        }
+      })
+      return excludeType
     }
   },
   methods: {
@@ -68,7 +76,9 @@ export default {
       setTimeout(() => {
         this.$refs.status.style.fontSize = '18px'
       }, 100)
-    }
+    },
+    ...mapActions({
+    })
   }
 }
 </script>
@@ -104,6 +114,8 @@ export default {
     background: $menuBgColor
     .menuContainer
       width: 100%
+      .router-link-active
+        background: $mainColor
       .menuItem
         padding-left: 10%
         height: 40px
