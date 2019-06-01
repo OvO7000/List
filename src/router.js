@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Items from 'components/Items.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/:type/:sub-type',
-      name: 'home',
-      component: Home
+      path: '/:type/:subType',
+      name: 'Items',
+      component: Items
     }
   ]
 })

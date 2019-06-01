@@ -28,8 +28,9 @@ module.exports = {
       .set('assets', resolve('src/assets'))
       .set('components', resolve('src/components'))
       .set('views', resolve('src/views'))
-      .set('routers', resolve('src/routers'))
+      .set('router', resolve('src/router'))
       .set('styles', resolve('src/style'))
+      .set('api', resolve('src/api'))
   },
   css: {
     modules: false,

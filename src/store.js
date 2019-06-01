@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import api from 'api/index'
 
 Vue.use(Vuex)
 
@@ -7,11 +8,7 @@ export default new Vuex.Store({
   state: {
     user: {
       name: '',
-      token: ''
-    },
-    route: {
-      type: 'work',
-      subType: 'comic'
+      token: 'asdadwawdad'
     },
     type: ['figure', 'work'],
     subType: {
@@ -41,8 +38,25 @@ export default new Vuex.Store({
       work: {}
     }
   },
-  mutations: {},
-  actions: {},
   getters: {
+    defaultType (state) {
+      return state.type[0]
+    },
+    defaultSubType (state, getters) {
+      return state.subType[getters.defaultType][0].id
+    }
+  },
+  mutations: {
+    setType (state, { type }) {
+      state.type = type
+    },
+    setSubType (state, { figure, work }) {
+      state.subType = { figure, work }
+    }
+  },
+  actions: {
+    getType (context) {
+      api.type.getType().then((res) => {})
+    }
   }
 })

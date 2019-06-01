@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import TransitionSlide from 'components/Slide'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -50,12 +51,17 @@ export default {
   },
   computed: {
     ...mapState({
-      route: 'route',
       type: 'type',
       subType: 'subType'
     }),
     status () {
       return 'crow'
+    },
+    route () {
+      return {
+        type: this.$route.params.type || this.$store.getters.defaultType,
+        subType: this.$route.params.subType || this.$store.getters.defaultSubType
+      }
     },
     excludeType () {
       let excludeType = ''
@@ -79,6 +85,12 @@ export default {
     },
     ...mapActions({
     })
+  },
+  components: {
+    TransitionSlide
+  },
+  mounted () {
+    this.$store.dispatch('getType')
   }
 }
 </script>
