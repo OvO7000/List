@@ -4,7 +4,7 @@ import store from '@/store'
 
 // 创建axios实例
 var instance = axios.create({
-  baseURL: 'http://list.ovo7.cn/api',
+  // baseURL: 'http://list.ovo7.cn',
   timeout: 1000 * 12
 })
 // 设置post请求头

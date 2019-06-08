@@ -2,7 +2,7 @@
   <div class="header">
     <div class="headContainer"  @click="toogleMenu">
       <div class="icon" @click.stop="prompt">
-        <font-awesome-icon :icon="status" class="status" />
+        <font-awesome-icon :icon="status" ref="status" class="status" />
       </div>
     </div>
     <transition-slide>
@@ -11,18 +11,20 @@
           <ul>
             <router-link
               tag="li"
-              :to="'/' + route.type + '/' + item.id"
-              v-for="item in subType[route.type]"
+              :to="'/' + type + '/' + item.name_en"
+              v-for="item in subType[type]"
               :key="item.id"
               class="menuItem"
+              @click.native="toogleMenu"
             ><span>{{item.name}}</span></router-link>
             <li  class="space"></li>
             <router-link
               tag="li"
-              :to="'/' + excludeType + '/' + item.id"
+              :to="'/' + excludeType + '/' + item.name_en"
               v-for="item in subType[excludeType]"
               :key="item.id"
               class="menuItem"
+              @click.native="toogleMenu"
             ><span>{{item.name}}</span></router-link>
             <li class="search">
               <input type="text">
@@ -40,9 +42,6 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Header',
-  props: {
-    msg: String
-  },
   data: () => {
     return {
       showMenu: false,
@@ -51,25 +50,23 @@ export default {
   },
   computed: {
     ...mapState({
-      type: 'type',
       subType: 'subType'
     }),
     status () {
       return 'crow'
     },
-    route () {
-      return {
-        type: this.$route.params.type || this.$store.getters.defaultType,
-        subType: this.$route.params.subType || this.$store.getters.defaultSubType
-      }
+    type () {
+      return this.$route.path.split('/')[1]
     },
     excludeType () {
       let excludeType = ''
-      this.type.forEach(item => {
-        if (item !== this.route.type) {
-          excludeType = item
-        }
-      })
+      if (Object.keys(this.subType).length) {
+        Object.keys(this.subType).forEach(item => {
+          if (item !== this.type) {
+            excludeType = item
+          }
+        })
+      }
       return excludeType
     }
   },
@@ -88,9 +85,6 @@ export default {
   },
   components: {
     TransitionSlide
-  },
-  mounted () {
-    this.$store.dispatch('getType')
   }
 }
 </script>
@@ -104,6 +98,7 @@ export default {
   left: 0
   right: 0
   background-color: $bgColor
+  z-index: 1000
   .headContainer
     position: relative
     margin: 0 auto

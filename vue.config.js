@@ -19,7 +19,7 @@ module.exports = {
   lintOnSave: 'error',
   runtimeCompiler: false,
   transpileDependencies: [], // 让babel转译node_modules下的依赖
-  productionSourceMap: false,
+  productionSourceMap: true, //
   configureWebpack: (config) => {
   },
   chainWebpack: (config) => {
@@ -49,7 +49,14 @@ module.exports = {
     port: 3000,
     https: false,
     hotOnly: false,
-    proxy: null,
+    disableHostCheck: true,
+    proxy: {
+      '/api': {
+        target: 'http://list.ovo7.cn',
+        ws: true,
+        changeOrigin: true
+      }
+    },
     before: app => {}
   },
   parallel: require('os').cpus().length > 1,

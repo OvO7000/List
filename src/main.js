@@ -15,9 +15,10 @@ import 'styles/animation.styl'
 // font-awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-import { faCrow } from '@fortawesome/free-solid-svg-icons'
+import { faCrow, faLink, faUnlink, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCrow)
+library.add(faCrow, faLink, faUnlink, faStar, faStarRegular)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
