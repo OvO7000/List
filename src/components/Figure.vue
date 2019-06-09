@@ -19,7 +19,7 @@
         >{{work.name}}</a>
       </div>
       <div class="works" v-else>
-        <font-awesome-icon icon="star" class="icon" />
+        <font-awesome-icon :icon="['far', 'star']" class="icon" />
         <span class="work">no work</span>
       </div>
       <!--link-->

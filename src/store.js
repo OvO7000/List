@@ -41,9 +41,22 @@ export default new Vuex.Store({
             },
             img: [
               {
-                id: 'aaa',
+                id: '1212',
+                title: 'BLAME!',
                 origin: 'a',
-                min: 'a'
+                compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
+              },
+              {
+                id: '1231',
+                title: 'Dead Leaves',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
+              },
+              {
+                id: '24323',
+                title: 'BLAME!',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
               }
             ]
           },
@@ -54,9 +67,22 @@ export default new Vuex.Store({
             },
             img: [
               {
-                id: 'aaa',
+                id: '1321',
+                title: 'BLAME!',
                 origin: 'a',
-                min: 'a'
+                compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
+              },
+              {
+                id: '234',
+                title: 'Dead Leaves',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
+              },
+              {
+                id: '2413',
+                title: 'BLAME!',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
               }
             ]
           }
@@ -94,6 +120,9 @@ export default new Vuex.Store({
   getters: {
     item: (state) => (id) => {
       return state.items[state.route.type][state.route.subType].find(item => item.id === id)
+    },
+    imgs: (state) => (id) => {
+      return state.items[state.route.type][state.route.subType].find(item => item.id === id).img
     },
     ids: (state) => {
       let ids = []

@@ -33,11 +33,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  @import '~styles/variables.styl'
+
   .item
     overflow: hidden
+    &:hover
+      background-color: $bgColor
     .container
       position: relative
-      width: 80%
+      width: 60%
       margin: 0 auto
       .images
         position: absolute

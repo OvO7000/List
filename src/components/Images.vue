@@ -1,5 +1,15 @@
 <template>
-    <div class="images">images {{id}}</div>
+    <div class="images">
+      <div
+        class="image"
+        v-for="img in imgs"
+        :key="img.id"
+      >
+        <div class="inner">
+          <img :src="img.compressed" :alt="img.title" :title="img.title">
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -10,10 +20,28 @@ export default {
       type: Number,
       required: true
     }
+  },
+  computed: {
+    imgs () {
+      return this.$store.getters.imgs(this.id)
+    }
   }
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+  @import '~styles/variables.styl'
 
+  .images
+    width: 750px
+    .image
+      width: 250px
+      height: $itemHeight
+      float: left
+      .inner
+        overflow: hidden
+        height: $itemHeight - 10
+        margin: 5px 0
+      img
+        width: 250px
 </style>
