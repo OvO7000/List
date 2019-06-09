@@ -1,7 +1,7 @@
 <template>
-  <div class="item">
+  <div class="item" @click="showSubItems">
     <div class="container">
-      <router-view :id="id" :index="index"></router-view>
+      <router-view :id="id" :index="index" :show="show"></router-view>
       <Images :id="id"></Images>
     </div>
   </div>
@@ -9,8 +9,14 @@
 
 <script>
 import Images from 'components/Images'
+
 export default {
   name: 'Items',
+  data () {
+    return {
+      show: false
+    }
+  },
   props: {
     id: {
       type: Number,
@@ -24,6 +30,11 @@ export default {
   computed: {
     type () {
       return this.$route.path.split('/')[1]
+    }
+  },
+  methods: {
+    showSubItems () {
+      this.show = !this.show
     }
   },
   components: {

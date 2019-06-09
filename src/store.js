@@ -94,23 +94,72 @@ export default new Vuex.Store({
             id: 22,
             rank: true,
             name: 'a',
-            sub: {
-              sub1: {
-                name: 'a1',
-                info: [],
-                tag: [],
-                adapt: []
+            sub: [
+              {
+                id: 'asdas',
+                name: '入侵负责',
+                originName: 'adad afafas',
+                info: [
+                  {
+                    name: '入侵负责',
+                    href: 'adaf',
+                    title: 'aaa'
+                  },
+                  {
+                    name: '入侵负2',
+                    title: 'aaa'
+                  }
+                ],
+                tag: ['alert', 'not perfect complete']
               },
-              sub2: {
-                name: 'a2'
+              {
+                id: 'dasfsd',
+                name: 'a1',
+                info: [
+                  {
+                    name: 'asfdaa',
+                    title: 'aaa'
+                  },
+                  {
+                    name: 'aasgsa',
+                    title: 'aaa'
+                  }
+                ],
+                tag: ['alert', 'not perfect complete', 'rotten', 'serials']
               }
-            },
-            img: {
-              img1: {
+            ],
+            adapt: [
+              {
+                type: '动画',
+                href: ''
+              }
+            ],
+            img: [
+              {
+                id: '1212',
+                title: 'BLAME!',
                 origin: 'a',
-                min: 'a'
+                compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
+              },
+              {
+                id: '1231',
+                title: 'Dead Leaves',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
+              },
+              {
+                id: '24323',
+                title: 'BLAME!',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
+              },
+              {
+                id: '24ssc323',
+                title: 'BLAME!',
+                origin: 'a',
+                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
               }
-            }
+            ]
           }
         ],
         film: []
@@ -130,9 +179,6 @@ export default new Vuex.Store({
         ids = state.items[state.route.type][state.route.subType].map(item => item.id)
       }
       return ids
-    },
-    isRank: (state) => (type, subType, id) => {
-      return state.items[type][subType].find(item => item.id === id).rank
     }
   },
   mutations: {

@@ -33,9 +33,9 @@ export default {
   @import '~styles/variables.styl'
 
   .images
-    width: 750px
+    width: 660px
     .image
-      width: 250px
+      width: 220px
       height: $itemHeight
       float: left
       .inner

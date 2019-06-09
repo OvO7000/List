@@ -62,9 +62,6 @@ export default {
   .transition-slide-leave-active
     transition: height 1s ease-in-out
     overflow: hidden
-  .transition-slide-enter,
-  .transition-slide-leave-to
-    height: 0
   *
     will-change: height
     transform: translateZ(0)
