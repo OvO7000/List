@@ -7,12 +7,14 @@
       :id="id"
       :index="index+1"
     ></Item>
+    <Test></Test>
   </div>
 </template>
 
 <script>
 import Header from 'components/Header'
 import Item from 'components/Item'
+import Test from 'components/Test'
 
 export default {
   name: 'home',
@@ -29,7 +31,8 @@ export default {
   },
   components: {
     Header,
-    Item
+    Item,
+    Test
   }
 }
 </script>

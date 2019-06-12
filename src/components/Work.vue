@@ -3,29 +3,30 @@
     <div class="rank" v-if="item.rank"><span>#{{index}}</span></div>
     <div class="content">
       <!--sub-->
-      <div
-        class="sub"
-        v-for="(sub, index) in subs"
-        :key="sub.id"
-        v-show="!index || show"
-      >
-        <!--name-->
-        <div class="name">
-          <span>{{sub.name}}</span>
-          <span v-if="sub.originName"> ( {{sub.originName}} )</span>
-        </div>
-        <!--info-->
-        <div class="infos" v-if="sub.info">
-          <font-awesome-icon icon="info-circle" class="icon" />
-          <a
-            class="info"
-            v-for="info in sub.info"
-            :key="info.name"
-            :href="info.href"
-            :title="info.title"
-          >{{info.name}}</a>
-          <!--tag-->
-          <span class="tags" v-if="sub.tag">
+      <transition-group tag="div" name="slide">
+        <div
+            class="sub"
+            v-for="(sub, index) in subs"
+            :key="sub.id"
+            v-show="!index || show"
+          >
+            <!--name-->
+            <div class="name">
+              <span>{{sub.name}}</span>
+              <span v-if="sub.originName"> ( {{sub.originName}} )</span>
+            </div>
+            <!--info-->
+            <div class="infos" v-if="sub.info">
+              <font-awesome-icon icon="info-circle" class="icon" />
+              <a
+                class="info"
+                v-for="info in sub.info"
+                :key="info.name"
+                :href="info.href"
+                :title="info.title"
+              >{{info.name}}</a>
+              <!--tag-->
+              <span class="tags" v-if="sub.tag">
             <span
               class="tag"
               v-for="(tag, index) in sub.tag"
@@ -35,28 +36,29 @@
               <font-awesome-icon :icon="status(tag)" class="icon" />
             </span>
         </span>
-        </div>
-        <div class="infos" v-else>
-          <font-awesome-icon icon="question-circle" class="icon" />
-          <span class="info">no info</span>
-        </div>
-        <!--adapt-->
-        <div class="adaptContainer" v-if="!index">
-          <div class="adapts" v-if="item.adapt">
-            <font-awesome-icon icon="file" class="icon" />
-            <a
-              class="adapt"
-              v-for="adapt in item.adapt"
-              :key="adapt.type"
-              :href="adapt.href"
-            >{{adapt.type}}</a>
+            </div>
+            <div class="infos" v-else>
+              <font-awesome-icon icon="question-circle" class="icon" />
+              <span class="info">no info</span>
+            </div>
+            <!--adapt-->
+            <div class="adaptContainer" v-if="!index">
+              <div class="adapts" v-if="item.adapt">
+                <font-awesome-icon icon="file" class="icon" />
+                <a
+                  class="adapt"
+                  v-for="adapt in item.adapt"
+                  :key="adapt.type"
+                  :href="adapt.href"
+                >{{adapt.type}}</a>
+              </div>
+              <div class="adapts" v-else>
+                <font-awesome-icon icon="file-alt" class="icon" />
+                <span class="adapt">no adapt</span>
+              </div>
+            </div>
           </div>
-          <div class="adapts" v-else>
-            <font-awesome-icon icon="file-alt" class="icon" />
-            <span class="adapt">no adapt</span>
-          </div>
-        </div>
-      </div>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -114,6 +116,18 @@ export default {
 
 <style lang="stylus" scoped>
   @import '~styles/variables.styl'
+  *
+    will-change: max-height
+    transform: translateZ(0)
+    backface-visibility: hidden
+    perspective: 1000px
+  .slide-enter-active,
+  .slide-leave-active
+    transition: max-height 1s linear
+    max-height: 80px
+  .slide-enter,
+  .slide-leave-to
+    max-height: 0
 
   .work
     position: relative
@@ -127,7 +141,7 @@ export default {
     .content
       .sub
         padding: 25px 5%
-        height: $itemHeight - 50
+        height: $itemHeight -   50
         .name
           span
             font-size: 16px

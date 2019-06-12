@@ -11,7 +11,6 @@ import 'styles/reset.styl'
 import 'styles/base.styl'
 import 'styles/variables.styl'
 import 'styles/mixins.styl'
-import 'styles/animation.styl'
 // font-awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 
