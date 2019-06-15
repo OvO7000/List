@@ -1,8 +1,6 @@
 <template>
   <div class="figure">
-    <div class="rank"><span>#{{index}}</span></div>
-    <div class="content">
-      <div class="sub">
+    <div class="sub">
         <!--name-->
         <div class="name">
           <span>{{item.name}}</span>
@@ -38,7 +36,6 @@
           <span class="link">no link</span>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -47,10 +44,6 @@ export default {
   name: 'Figure',
   props: {
     id: {
-      type: Number,
-      required: true
-    },
-    index: {
       type: Number,
       required: true
     }
@@ -79,28 +72,19 @@ export default {
   @import '~styles/variables.styl'
 
   .figure
-    position: relative
-    .rank
-      position: absolute
-      left: 0
-      top: 25px
+    padding: 25px 0
+    width: 400px
+    height: $itemHeight - 50
+    .name
       span
-        font-size: 20px
+        font-size: 16px
         line-height: 30px
-    .content
-      .sub
-        padding: 25px 5%
-        height: $itemHeight - 50
-        .name
-          span
-            font-size: 16px
-            line-height: 30px
-        .works,
-        .links
-          margin-left: 20px
-          font-size: 14px
-          .link,
-          .work
-            margin-left: 15px
-            line-height: 25px
+    .works,
+    .links
+      margin-left: 20px
+      font-size: 14px
+      .link,
+      .work
+        margin-left: 15px
+        line-height: 25px
 </style>

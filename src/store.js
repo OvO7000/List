@@ -235,6 +235,9 @@ export default new Vuex.Store({
     imgs: (state) => (id) => {
       return state.items[state.route.type][state.route.subType].find(item => item.id === id).img
     },
+    isRank: (state) => (id) => {
+      return state.items[state.route.type][state.route.subType].find(item => item.id === id).rank
+    },
     ids: (state) => {
       let ids = []
       if (state.route.type && state.route.subType) {

@@ -34,14 +34,17 @@ export default {
 
   .images
     width: 660px
+    display: flex
+    flex-wrap: wrap
+    align-content: flex-start
     .image
+      flex: 0 0 auto
       width: 220px
       height: $itemHeight
-      float: left
       .inner
         overflow: hidden
         height: $itemHeight - 10
         margin: 5px 0
-      img
-        width: 250px
+        img
+          width: 220px
 </style>
