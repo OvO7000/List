@@ -8,6 +8,7 @@
       :id="id"
       :index="index+1"
     ></Item>
+    <Checkbox></Checkbox>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import Header from 'components/Header'
 import Item from 'components/Item'
 // import Test from 'components/Test'
 import AddWork from 'components/AddWork'
+import Checkbox from 'components/Checkbox'
 
 export default {
   name: 'home',
@@ -34,7 +36,8 @@ export default {
     Header,
     Item,
     // Test,
-    AddWork
+    AddWork,
+    Checkbox
   }
 }
 </script>

@@ -1,17 +1,20 @@
-<template>
-  <div class="checkbox">
-    <div v-if="checked">
-      <input type="checkbox" class="checked">
-    </div>
-    <div v-else>
-      <input type="checkbox" class="notChecked">
-    </div>
-  </div>
+<input>
+  <input type="checkbox" class="checkBox" @click="check"><></input>
 </template>
 
 <script>
 export default {
-  name: 'Checkbox'
+  name: 'Checkbox',
+  data () {
+    return {
+      checked: false
+    }
+  },
+  methods: {
+    check () {
+      this.checked = !this.checked
+    }
+  }
 }
 </script>
 
