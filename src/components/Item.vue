@@ -80,6 +80,4 @@ export default {
         span
           font-size: 20px
           line-height: 30px
-      .images
-        flex: 0 1 auto
 </style>

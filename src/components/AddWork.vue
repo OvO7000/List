@@ -1,10 +1,9 @@
 <template>
   <div class="addWork">
-    <div class="container">
-      <label class="rank">
+    <label class="rank">
         <input type="checkbox" v-model="work.rank" name="rank"><span>Rank?</span>
       </label>
-      <div class="content">
+    <div class="content">
         <input type="text" placeholder="name" v-model="work.name">
         <!--sub-->
         <div
@@ -19,10 +18,14 @@
           </label>
         </div>
       </div>
+    <div class="imgs">
+      <div>+</div>
     </div>
     <!--submit-->
     <div class="btn">
-      <input type="submit" value="save" @click="addWork">
+      <div class="save"  @click="addWork">
+        <input type="submit" value="save">
+      </div>
     </div>
   </div>
 </template>
@@ -65,38 +68,44 @@ export default {
   @import '~styles/variables.styl'
 
   .addWork
+    display: flex
+    justify-content:center
     position: relative
     background-color: $menuBgColor
-  .container
-    position: relative
-    margin: 0 auto
-    width: 60%
     .rank
-      position: absolute
-      left: 0
-      top: 25px
+      margin-top: 25px
+      width: 100px
       input
-        border: none
-        background-color: #fff
+        width: 20px
+        height: 20px
+        border: 1px solid #ccc
+        background-color: $menuBgColor
+        -webkit-appearance: none
       span
         font-size: 20px
         line-height: 30px
     .content
-      padding: 25px 100px
-  .btn
-    position: absolute
-    right: 0
-    top: 25px
-    bottom: 25px
-    width: 20%
-    color: $fontColor
-    input
-      display: block
-      width: 100%
-      height: 100%
-      color: $fontColor
-      font-size: 16px
-      background-color: $menuBgColor
-      &:hover
-        background-color: $mainColor
+      padding: 25px 0
+      width: 400px
+    .imgs
+      width: 660px
+    .btn
+      position: absolute
+      right: 0
+      top: 0
+      bottom: 0
+      .save
+        width: 100px
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        input
+          color: $fontColor
+          font-size: 16px
+          background-color: $menuBgColor
+        &:hover
+          background-color: $mainColor
+          input
+            background-color: $mainColor
 </style>
