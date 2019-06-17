@@ -1,7 +1,7 @@
 <template>
   <div class="addWork">
     <label class="rank">
-        <input type="checkbox" v-model="work.rank" name="rank"><span>Rank?</span>
+      <Radio v-model="work.rank" :option="{size: '20px', color: '#ccc'}"></Radio><span>Rank?</span>
       </label>
     <div class="content">
         <input type="text" placeholder="name" v-model="work.name">
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import Radio from 'components/Radio'
+
 export default {
   name: 'AddWork',
   data () {
@@ -60,6 +62,9 @@ export default {
         console.log(res)
       })
     }
+  },
+  components: {
+    Radio
   }
 }
 </script>
