@@ -38,7 +38,7 @@
 
 <script>
 import TransitionSlide from 'components/Slide'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Header',
@@ -79,9 +79,7 @@ export default {
       setTimeout(() => {
         this.$refs.status.style.fontSize = '18px'
       }, 100)
-    },
-    ...mapActions({
-    })
+    }
   },
   components: {
     TransitionSlide

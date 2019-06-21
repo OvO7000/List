@@ -1,23 +1,26 @@
 <template>
   <div class="addWork">
-    <label class="rank">
-      <Radio v-model="work.rank" :option="{size: '20px', color: '#ccc'}"></Radio><span>Rank?</span>
-      </label>
+    <label class="rank" @click="test">
+      <span @click="rank">#</span>
+    </label>
     <div class="content">
-        <input type="text" placeholder="name" v-model="work.name">
+        ><input type="text" placeholder="name" v-model="work.name" class="name">
         <!--sub-->
         <div
           class="sub"
           v-for="item in work.sub"
           :key="item.name"
         >
-          <input type="text" placeholder="name" v-model="item.name">
-          <input type="text" placeholder="origin name" v-model="item.originName">
+          <div class="subNameContainer">
+            ><input type="text" placeholder="name" v-model="item.name" class="subName">
+            ><input type="text" placeholder="(O)" v-model="item.originName" class="originName">
+          </div>
+
           <label>
-            <input type="checkbox" v-model="item.secret" name="secret">Secret
+            <input type="checkbox" v-model="item.secret" name="secret" @click="alert">Secret
           </label>
         </div>
-      </div>
+    </div>
     <div class="imgs">
       <div>+</div>
     </div>
@@ -31,14 +34,12 @@
 </template>
 
 <script>
-import Radio from 'components/Radio'
-
 export default {
   name: 'AddWork',
   data () {
     return {
       work: {
-        rank: true,
+        rank: false,
         name: '',
         sub: [
           {
@@ -50,6 +51,14 @@ export default {
             img: ''
           }
         ]
+      },
+      sub: {
+        name: '',
+        originName: '',
+        info: [],
+        tag: [],
+        secret: false,
+        img: ''
       }
     }
   },
@@ -61,10 +70,35 @@ export default {
       this.$api.work.addWork(this.work).then((res) => {
         console.log(res)
       })
+    },
+    rank (e) {
+      if (this.work.rank === true) {
+        this.work.rank = false
+        e.target.style.opacity = '0.5'
+      } else {
+        this.work.rank = true
+        e.target.style.opacity = '1'
+      }
+    },
+    test () {
+      // const that = this
+      this.$dlg.alert('tetesttesttesttesttesttesttestst', {
+        title: 'test',
+        params: {
+          name: 'null',
+          originName: 'test'
+        }
+      })
+    },
+    alert () {
+      this.$dlg.modal({
+        title: 'test',
+        params: {
+          name: 'null',
+          originName: 'test'
+        }
+      })
     }
-  },
-  components: {
-    Radio
   }
 }
 </script>
@@ -77,21 +111,34 @@ export default {
     justify-content:center
     position: relative
     background-color: $menuBgColor
+    input[type='text']::before
+      content: ">"
+      display: block
+      color: #000
     .rank
       margin-top: 25px
       width: 100px
-      input
-        width: 20px
-        height: 20px
-        border: 1px solid #ccc
-        background-color: $menuBgColor
-        -webkit-appearance: none
       span
+        padding: 0 5px 0 0
         font-size: 20px
-        line-height: 30px
+        opacity: 0.5
     .content
       padding: 25px 0
       width: 400px
+      input
+      .name
+        font-size: 16px
+        line-height: 30px
+      .sub
+        padding-top: 25px
+        .subNameContainer
+          display: flex
+          font-size: 16px
+          line-height: 30px
+          .subName
+            flex: 1 1 auto
+          .originName
+            flex: 1 0 25px
     .imgs
       width: 660px
     .btn

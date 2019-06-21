@@ -52,7 +52,7 @@ export default {
   .radio
     display: inline-block
     border: 1px solid #000
-    border-radius: 3px
+    /*border-radius: 3px*/
     line-height: 20px
     vertical-align: baseline
 </style>

@@ -41,5 +41,5 @@ export default {
     .c
       width: 200px
       height: 200px
-      background-color: #fff
+      background-color: #000
 </style>

@@ -31,6 +31,7 @@ module.exports = {
       .set('router', resolve('src/router'))
       .set('styles', resolve('src/style'))
       .set('api', resolve('src/api'))
+      .set('plugins', resolve('src/plugins'))
   },
   css: {
     modules: false,
