@@ -13,7 +13,7 @@
         </div>
         <!--info-->
         <div class="infos" v-if="sub.info">
-          <font-awesome-icon icon="info-circle" class="icon" />
+          <i class="icon fa fa-info-circle"></i>
           <a
             class="info"
             v-for="info in sub.info"
@@ -21,26 +21,15 @@
             :href="info.href"
             :title="info.title"
           >{{info.name}}</a>
-          <!--tag-->
-          <span class="tags" v-if="sub.tag">
-            <span
-              class="tag"
-              v-for="(tag, index) in sub.tag"
-              :title="tag"
-              :key="index"
-            >
-              <font-awesome-icon :icon="status(tag)" class="icon" />
-            </span>
-          </span>
         </div>
         <div class="infos" v-else>
-          <font-awesome-icon icon="question-circle" class="icon" />
+          <i class="icon fa fa-question-circle"></i>
           <span class="info">no info</span>
         </div>
         <!--adapt-->
         <div class="adaptContainer" v-if="!index">
           <div class="adapts" v-if="item.adapt">
-            <font-awesome-icon icon="file" class="icon" />
+            <i class="icon fa fa-file"></i>
             <a
               class="adapt"
               v-for="adapt in item.adapt"
@@ -49,9 +38,22 @@
             >{{adapt.type}}</a>
           </div>
           <div class="adapts" v-else>
-            <font-awesome-icon icon="file-alt" class="icon" />
+            <i class="icon fa fa-file-text"></i>
             <span class="adapt">no adapt</span>
           </div>
+        </div>
+        <!--tags-->
+        <div class="tags">
+          <span v-if="sub.tag">
+            <span
+              class="tag"
+              v-for="(tag, index) in sub.tag"
+              :title="status(tag).title"
+              :key="index"
+            >
+              <i :class="['icon','fa',status(tag).icon]"></i>
+            </span>
+          </span>
         </div>
       </div>
   </div>
@@ -79,22 +81,30 @@ export default {
   },
   methods: {
     status (tag) {
-      let status = ''
+      let icon = ''
+      let title = ''
       switch (tag) {
-        case 'alert':
-          status = 'exclamation-triangle'
+        case 0:
+          icon = 'fa-exclamation'
+          title = 'alert'
           break
-        case 'not perfect complete':
-          status = 'splotch'
+        case 1:
+          icon = 'fa-tasks'
+          title = 'not perfect complete'
           break
-        case 'rotten':
-          status = 'star-half'
+        case 2:
+          icon = 'fa-star-half-o'
+          title = 'rotten'
           break
-        case 'serials':
-          status = 'pen-square'
+        case 3:
+          icon = 'fa-pencil'
+          title = 'serials'
           break
       }
-      return status
+      return {
+        icon,
+        title
+      }
     }
   }
 }
@@ -132,10 +142,12 @@ export default {
         .adapt
           margin-left: 15px
           line-height: 25px
-        .tags
+        .icon
+          width: 15px
+      .tags
+        margin-left: 20px
+        font-size: 14px
+        .tag
           display: inline-block
-          padding-left: 15px
-          .tag
-            display: inline-block
-            padding: 0 5px
+          padding-right: 15px
 </style>

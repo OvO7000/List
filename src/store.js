@@ -110,7 +110,7 @@ export default new Vuex.Store({
                     title: 'aaa'
                   }
                 ],
-                tag: ['alert', 'not perfect complete']
+                tag: [1, 2]
               },
               {
                 id: 'dasfsd',
@@ -125,7 +125,7 @@ export default new Vuex.Store({
                     title: 'aaa'
                   }
                 ],
-                tag: ['alert', 'not perfect complete', 'rotten', 'serials']
+                tag: [0, 1, 2, 3]
               },
               {
                 id: 'dasasfsd',
@@ -140,7 +140,7 @@ export default new Vuex.Store({
                     title: 'aaa'
                   }
                 ],
-                tag: ['alert', 'not perfect complete', 'rotten', 'serials']
+                tag: [0]
               },
               {
                 id: 'azasdas',
@@ -157,7 +157,7 @@ export default new Vuex.Store({
                     title: 'aaa'
                   }
                 ],
-                tag: ['alert', 'not perfect complete']
+                tag: [1]
               },
               {
                 id: 'daszcxfsd',
@@ -172,7 +172,7 @@ export default new Vuex.Store({
                     title: 'aaa'
                   }
                 ],
-                tag: ['alert', 'not perfect complete', 'rotten', 'serials']
+                tag: [2]
               },
               {
                 id: 'dasaszxcxcfsd',
@@ -187,7 +187,7 @@ export default new Vuex.Store({
                     title: 'aaa'
                   }
                 ],
-                tag: ['alert', 'not perfect complete', 'rotten', 'serials']
+                tag: [3]
               }
             ],
             adapt: [
@@ -230,17 +230,23 @@ export default new Vuex.Store({
   },
   getters: {
     item: (state) => (id) => {
-      return state.items[state.route.type][state.route.subType].find(item => item.id === id)
+      if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
+        return state.items[state.route.type][state.route.subType].find(item => item.id === id)
+      }
     },
     imgs: (state) => (id) => {
-      return state.items[state.route.type][state.route.subType].find(item => item.id === id).img
+      if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
+        return state.items[state.route.type][state.route.subType].find(item => item.id === id).img
+      }
     },
     isRank: (state) => (id) => {
-      return state.items[state.route.type][state.route.subType].find(item => item.id === id).rank
+      if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
+        return state.items[state.route.type][state.route.subType].find(item => item.id === id).rank
+      }
     },
     ids: (state) => {
       let ids = []
-      if (state.route.type && state.route.subType) {
+      if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
         ids = state.items[state.route.type][state.route.subType].map(item => item.id)
       }
       return ids

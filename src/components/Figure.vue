@@ -8,7 +8,7 @@
         </div>
         <!--work-->
         <div class="works" v-if="works">
-          <font-awesome-icon icon="star" class="icon" />
+          <i class="icon fa fa-star"></i>
           <a
             class="work"
             v-for="work in works"
@@ -18,12 +18,12 @@
           >{{work.name}}</a>
         </div>
         <div class="works" v-else>
-          <font-awesome-icon :icon="['far', 'star']" class="icon" />
+          <i class="icon fa fa-star-o"></i>
           <span class="work">no work</span>
         </div>
         <!--link-->
         <div class="links" v-if="links">
-          <font-awesome-icon icon="link" class="icon" />
+          <i class="icon fa fa-chain"></i>
           <a
             class="link"
             v-for="link in links"
@@ -32,7 +32,7 @@
           >{{link.name}}</a>
         </div>
         <div class="links" v-else>
-          <font-awesome-icon icon="unlink" class="icon" />
+          <i class="icon fa fa-chain-broken"></i>
           <span class="link">no link</span>
         </div>
       </div>

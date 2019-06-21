@@ -2,7 +2,7 @@
   <div class="header">
     <div class="headContainer"  @click="toogleMenu">
       <div class="icon" @click.stop="prompt">
-        <font-awesome-icon :icon="status" ref="status" class="status" />
+        <i class="status fa fa-bug" ref="status"></i>
       </div>
     </div>
     <transition-slide>

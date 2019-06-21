@@ -12,15 +12,15 @@ import 'styles/reset.styl'
 import 'styles/base.styl'
 import 'styles/variables.styl'
 import 'styles/mixins.styl'
+import 'font-awesome/css/font-awesome.css'
 // plugins
 import dialogs from 'plugins/dialogs'
 // font-awesome
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheck, faCrow, faLink, faUnlink, faStar, faInfoCircle, faQuestionCircle, faFile, faFileAlt, faExclamationTriangle, faSplotch, faStarHalf, faPenSquare } from '@fortawesome/free-solid-svg-icons'
-import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCheck, faCrow, faLink, faUnlink, faStar, faStarRegular, faInfoCircle, faQuestionCircle, faFile, faFileAlt, faExclamationTriangle, faSplotch, faStarHalf, faPenSquare)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { faCrow } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// library.add(faCrow)
+// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$api = api
 Vue.use(dialogs)
