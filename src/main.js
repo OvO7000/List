@@ -13,6 +13,7 @@ import 'styles/base.styl'
 import 'styles/variables.styl'
 import 'styles/mixins.styl'
 import 'font-awesome/css/font-awesome.css'
+import util from './util'
 // plugins
 import dialogs from 'plugins/dialogs'
 // font-awesome
@@ -23,6 +24,7 @@ import dialogs from 'plugins/dialogs'
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$api = api
+Vue.prototype.$util = util
 Vue.use(dialogs)
 
 Vue.config.productionTip = false
