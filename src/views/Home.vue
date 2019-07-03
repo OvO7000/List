@@ -2,23 +2,31 @@
   <div class="home">
     <Header></Header>
     <AddWork></AddWork>
-    <Item
-      v-for="(id, index) in ids"
-      :key="id"
-      :id="id"
+    <router-view
+      v-for="(info, index) in infos"
+      :key="info.id"
+      :id="info.id"
       :index="index+1"
-    ></Item>
+      :name="info.edit?'eItem':'item'"
+    ></router-view>
   </div>
 </template>
 
 <script>
 import Header from 'components/Header'
-import Item from 'components/Item'
+// import Item from 'components/Item'
 // import Test from 'components/Test'
 import AddWork from 'components/AddWork'
 
 export default {
   name: 'home',
+  data () {
+    return {
+      showAddBtn: true,
+      work: {
+      }
+    }
+  },
   computed: {
     type () {
       return this.$route.path.split('/')[1]
@@ -26,13 +34,41 @@ export default {
     subType () {
       return this.$route.path.split('/')[2]
     },
-    ids () {
-      return this.$store.getters.ids
+    infos () {
+      return this.$store.getters.info
+    }
+  },
+  methods: {
+    addWork () {
+      this.$dlg.modal({
+        title: 'work',
+        params: {
+          name: '',
+          originName: ''
+        },
+        callback: (data) => {
+          // this.$api.work.exist(data.name).then((res) => {})
+          // 没有输入名字
+          if (!data.name) return
+
+          let sub = Object.assign({}, this.sub)
+          sub.name = data.name
+          if (data.originName) {
+            sub.originName = data.originName
+          }
+
+          this.work.sub.push(sub)
+          this.show = true
+        }
+      })
+    },
+    add () {
+
     }
   },
   components: {
     Header,
-    Item,
+    // Item,
     // Test,
     AddWork
   }
@@ -42,4 +78,10 @@ export default {
 <style lang="stylus" scoped>
   .home
     padding-top: 60px
+    .btn
+      font-size: 30px
+      line-height: 50px
+      height: 50px
+      text-align: center
+      background-color: $menuBgColor
 </style>

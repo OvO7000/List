@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
-import Work from 'components/Work.vue'
-import Figure from 'components/Figure.vue'
+
+import Item from 'components/detail/Item.vue'
+import eItem from 'components/edit/Item.vue'
 
 Vue.use(Router)
 
@@ -11,12 +12,18 @@ const router = new Router({
     {
       path: '/work/:subType',
       name: 'work',
-      component: Work
+      components: {
+        item: Item,
+        eItem: eItem
+      }
     },
     {
       path: '/figure/:subType',
       name: 'figure',
-      component: Figure
+      components: {
+        item: Item,
+        eItem: eItem
+      }
     }
   ]
 })

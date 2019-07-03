@@ -136,13 +136,11 @@ export default {
           // this.$api.work.exist(data.name).then((res) => {})
           // 没有输入名字
           if (!data.name) return
-
           let sub = Object.assign({}, this.sub)
           sub.name = data.name
           if (data.originName) {
             sub.originName = data.originName
           }
-
           this.work.sub.push(sub)
           this.show = true
         }
@@ -158,7 +156,6 @@ export default {
         callback: (data) => {
           // this.$api.work.exist(data.name).then((res) => {})
           if (!data.name) return
-
           let sub = Object.assign({}, this.sub)
           sub.name = data.name
           if (data.originName) {
@@ -178,7 +175,6 @@ export default {
         callback: (data) => {
           // this.$api.work.exist(data.name).then((res) => {})
           if (!data.name) return
-
           sub.name = data.name
           if (data.originName) {
             sub.originName = data.originName
@@ -237,8 +233,19 @@ export default {
       const work = this.work
       work.type = this.$route.path.split('/')[1]
       work.subType = this.$route.path.split('/')[2]
-      this.$api.work.addWork(this.work).then((res) => {
-        console.log(res)
+      this.$api.work.add(this.work).then((res) => {
+        const formData = new FormData()
+        this.imgs.forEach(item => {
+          formData.append('imgs', item.file)
+          formData.append('ids[]', res[item.index])
+        })
+        this.$api.img.add(formData).then((res) => {
+          console.log('save')
+        }).catch((err) => {
+          this.$dlg.alert(err.msg)
+        })
+      }).catch((err) => {
+        this.$dlg.alert(err.msg)
       })
     },
     cancel () {
@@ -262,7 +269,6 @@ export default {
       this.selected.forEach((item) => {
         this.$delete(this.work.sub, item)
       })
-
       this.selected = []
     },
     rank (e) {
@@ -301,15 +307,12 @@ export default {
         e.target.style.opacity = '1'
       }
     }
-  },
-  mounted () {
   }
 }
 </script>
 
 <style lang="stylus" scoped>
   @import '~styles/variables.styl'
-
   .addWork
     .addWorkBtn
       font-size: 30px

@@ -18,7 +18,6 @@
             class="info"
             v-for="info in sub.info"
             :key="info.name"
-            :href="info.href"
             :title="info.title"
           >{{info.name}}</a>
         </div>
@@ -126,7 +125,7 @@ export default {
     max-height: 0
 
   .work
-    padding: 25px 0
+    padding-top: 25px
     width: 400px
     .sub
       height: 105px

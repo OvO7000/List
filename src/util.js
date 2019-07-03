@@ -38,6 +38,8 @@ const imgUploader = () => {
         })
       }
       reader.readAsDataURL(img)
+
+      fileInput.parentElement.removeChild(fileInput)
     })
   })
 }

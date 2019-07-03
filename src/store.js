@@ -12,10 +12,11 @@ export default new Vuex.Store({
       token: 'asdadwawdad'
     },
     route: {
+      id: '',
       type: '',
       subType: ''
     },
-    subType: {},
+    subType: [],
     items: {
       figure: {
         writer: [
@@ -101,7 +102,7 @@ export default new Vuex.Store({
                 originName: 'adad afafas',
                 info: [
                   {
-                    name: '入侵负责',
+                    name: '负责',
                     href: 'adaf',
                     title: 'aaa'
                   },
@@ -226,13 +227,17 @@ export default new Vuex.Store({
         ],
         film: []
       }
-    }
+    },
+    edits: []
   },
   getters: {
     item: (state) => (id) => {
       if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
         return state.items[state.route.type][state.route.subType].find(item => item.id === id)
       }
+    },
+    edit: (state) => (id) => {
+      return state.edits.find(item => item.id === id)
     },
     imgs: (state) => (id) => {
       if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
@@ -244,12 +249,17 @@ export default new Vuex.Store({
         return state.items[state.route.type][state.route.subType].find(item => item.id === id).rank
       }
     },
-    ids: (state) => {
-      let ids = []
+    info: (state) => {
+      let info
       if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
-        ids = state.items[state.route.type][state.route.subType].map(item => item.id)
+        info = state.items[state.route.type][state.route.subType].map(item => {
+          return {
+            id: item.id,
+            edit: !!state.edits.find(edit => edit.id === item.id)
+          }
+        })
       }
-      return ids
+      return info
     }
   },
   mutations: {
@@ -259,6 +269,27 @@ export default new Vuex.Store({
     setRoute (state, payload) {
       state.route.type = payload.type
       state.route.subType = payload.subType
+    },
+    setEdits (state, id) {
+      let edit
+      let item = Object.assign({}, state.items[state.route.type][state.route.subType].find(item => item.id === id))
+      if (state.route.type === 'work') {
+        edit = {
+          id: item.id,
+          item: item,
+          selected: [],
+          imgs: []
+        }
+      }
+      state.edits.push(edit)
+    },
+    setRank (state, id) {
+      let item = state.edits.find(item => item.id === id).item
+      item.rank = !item.rank
+    },
+    setEdit (state, edit) {
+      let index = state.edits.findIndex(item => item.id === edit.id)
+      state.edits.splice(index, 1, edit)
     }
   },
   actions: {
@@ -280,6 +311,12 @@ export default new Vuex.Store({
     },
     setRoute (context, payload) {
       context.commit('setRoute', payload)
+    },
+    setEdits (context, id) {
+      context.commit('setEdits', id)
+    },
+    setEdit (context, edit) {
+      context.commit('setEdit', edit)
     }
   }
 })
