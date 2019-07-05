@@ -66,7 +66,7 @@ export default {
   name: 'EWork',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
     // index: {

@@ -63,7 +63,7 @@ export default {
   name: 'work',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },

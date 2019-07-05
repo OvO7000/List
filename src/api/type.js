@@ -2,7 +2,7 @@ import instance from './instance'
 
 const type = {
   // 获取类型和子类型
-  getType () {
+  index () {
     return instance.get(`/api/type/index`)
   }
 }

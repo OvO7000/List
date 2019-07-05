@@ -17,7 +17,7 @@ export default {
   name: 'Images',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },

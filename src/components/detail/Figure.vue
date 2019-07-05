@@ -44,7 +44,7 @@ export default {
   name: 'Figure',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },

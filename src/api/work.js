@@ -10,13 +10,19 @@ const work = {
     return instance.post(`/api/work/:${id}/edit`, data)
   },
   // 列表
-  index (data) {
-    return instance.get(`/api/work/index`, data)
+  index (subType, count) {
+    const config = {
+      params: {
+        count: count,
+        subType: subType
+      }
+    }
+    return instance.get(`/api/work/index`, config)
   },
   // 删除
   del (data) {
     return instance.post(`/api/work/edit`, data)
-  },
+  }
 }
 
 export default work

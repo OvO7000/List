@@ -30,8 +30,9 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // subType 还未获取
-  if (!Object.keys(store.state.subType).length) {
+  if (!store.state.subType.length) {
     store.dispatch('getType', to.path)
+    next()
   }
   // 检查路由
   const type = to.path.split('/')[1]
@@ -41,8 +42,12 @@ router.beforeEach((to, from, next) => {
     subType
   }
   if (store.state.subType[type] && store.state.subType[type].find(item => item.name_en === subType)) {
-    store.dispatch('setRoute', route)
-    next()
+    store.dispatch('setRoute', route).then(() => {
+      if (!store.state.items[type][subType] || store.state.items[type][subType] === 0) {
+        store.dispatch('getItem', route)
+      }
+      next()
+    })
   }
 })
 

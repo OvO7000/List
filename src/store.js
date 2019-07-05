@@ -19,213 +19,214 @@ export default new Vuex.Store({
     subType: [],
     items: {
       figure: {
-        writer: [
-          {
-            id: 11,
-            name: '麦克 米格诺拉',
-            originName: 'Michael Mignola',
-            info: {
-              work: [
-                {
-                  id: 'aaa',
-                  name: 'aaa',
-                  href: 'asa',
-                  title: 'aaa'
-                }
-              ],
-              link: [
-                {
-                  name: 'Pixiv',
-                  href: 'www'
-                }
-              ]
-            },
-            img: [
-              {
-                id: '1212',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
-              },
-              {
-                id: '1231',
-                title: 'Dead Leaves',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
-              },
-              {
-                id: '24323',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-              }
-            ]
-          },
-          {
-            id: 12,
-            name: 'a',
-            info: {
-            },
-            img: [
-              {
-                id: '1321',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
-              },
-              {
-                id: '234',
-                title: 'Dead Leaves',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
-              },
-              {
-                id: '2413',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-              }
-            ]
-          }
-        ]
+        // writer: [
+        //   {
+        //     id: 11,
+        //     name: '麦克 米格诺拉',
+        //     originName: 'Michael Mignola',
+        //     info: {
+        //       work: [
+        //         {
+        //           id: 'aaa',
+        //           name: 'aaa',
+        //           href: 'asa',
+        //           title: 'aaa'
+        //         }
+        //       ],
+        //       link: [
+        //         {
+        //           name: 'Pixiv',
+        //           href: 'www'
+        //         }
+        //       ]
+        //     },
+        //     img: [
+        //       {
+        //         id: '1212',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
+        //       },
+        //       {
+        //         id: '1231',
+        //         title: 'Dead Leaves',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
+        //       },
+        //       {
+        //         id: '24323',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
+        //       }
+        //     ]
+        //   },
+        //   {
+        //     id: 12,
+        //     name: 'a',
+        //     info: {
+        //     },
+        //     imgs: [
+        //       {
+        //         id: '1321',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
+        //       },
+        //       {
+        //         id: '234',
+        //         title: 'Dead Leaves',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
+        //       },
+        //       {
+        //         id: '2413',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
+        //       }
+        //     ]
+        //   }
+        // ]
       },
       work: {
-        comic: [
-          {
-            id: 22,
-            rank: true,
-            name: 'a',
-            sub: [
-              {
-                id: 'asdas',
-                name: '入侵负责',
-                originName: 'adad afafas',
-                info: [
-                  {
-                    name: '负责',
-                    href: 'adaf',
-                    title: 'aaa'
-                  },
-                  {
-                    name: '入侵负2',
-                    title: 'aaa'
-                  }
-                ],
-                tag: [1, 2]
-              },
-              {
-                id: 'dasfsd',
-                name: 'a1',
-                info: [
-                  {
-                    name: 'asfdaa',
-                    title: 'aaa'
-                  },
-                  {
-                    name: 'aasgsa',
-                    title: 'aaa'
-                  }
-                ],
-                tag: [0, 1, 2, 3]
-              },
-              {
-                id: 'dasasfsd',
-                name: 'a1',
-                info: [
-                  {
-                    name: 'asfdaa',
-                    title: 'aaa'
-                  },
-                  {
-                    name: 'aasgsa',
-                    title: 'aaa'
-                  }
-                ],
-                tag: [0]
-              },
-              {
-                id: 'azasdas',
-                name: '入侵负责',
-                originName: 'adad afafas',
-                info: [
-                  {
-                    name: '入侵负责',
-                    href: 'adaf',
-                    title: 'aaa'
-                  },
-                  {
-                    name: '入侵负2',
-                    title: 'aaa'
-                  }
-                ],
-                tag: [1]
-              },
-              {
-                id: 'daszcxfsd',
-                name: 'a1',
-                info: [
-                  {
-                    name: 'asfdaa',
-                    title: 'aaa'
-                  },
-                  {
-                    name: 'aasgsa',
-                    title: 'aaa'
-                  }
-                ],
-                tag: [2]
-              },
-              {
-                id: 'dasaszxcxcfsd',
-                name: 'a1',
-                info: [
-                  {
-                    name: 'asfdaa',
-                    title: 'aaa'
-                  },
-                  {
-                    name: 'aasgsa',
-                    title: 'aaa'
-                  }
-                ],
-                tag: [3]
-              }
-            ],
-            adapt: [
-              {
-                type: '动画',
-                href: ''
-              }
-            ],
-            img: [
-              {
-                id: '1212',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
-              },
-              {
-                id: '1231',
-                title: 'Dead Leaves',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
-              },
-              {
-                id: '24323',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-              },
-              {
-                id: '24ssc323',
-                title: 'BLAME!',
-                origin: 'a',
-                compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-              }
-            ]
-          }
-        ],
-        film: []
+        comic: []
+        // comic: [
+        //   {
+        //     id: 22,
+        //     rank: true,
+        //     name: 'a',
+        //     sub: [
+        //       {
+        //         id: 'asdas',
+        //         name: '入侵负责',
+        //         originName: 'adad afafas',
+        //         info: [
+        //           {
+        //             name: '负责',
+        //             href: 'adaf',
+        //             title: 'aaa'
+        //           },
+        //           {
+        //             name: '入侵负2',
+        //             title: 'aaa'
+        //           }
+        //         ],
+        //         tag: [1, 2]
+        //       },
+        //       {
+        //         id: 'dasfsd',
+        //         name: 'a1',
+        //         info: [
+        //           {
+        //             name: 'asfdaa',
+        //             title: 'aaa'
+        //           },
+        //           {
+        //             name: 'aasgsa',
+        //             title: 'aaa'
+        //           }
+        //         ],
+        //         tag: [0, 1, 2, 3]
+        //       },
+        //       {
+        //         id: 'dasasfsd',
+        //         name: 'a1',
+        //         info: [
+        //           {
+        //             name: 'asfdaa',
+        //             title: 'aaa'
+        //           },
+        //           {
+        //             name: 'aasgsa',
+        //             title: 'aaa'
+        //           }
+        //         ],
+        //         tag: [0]
+        //       },
+        //       {
+        //         id: 'azasdas',
+        //         name: '入侵负责',
+        //         originName: 'adad afafas',
+        //         info: [
+        //           {
+        //             name: '入侵负责',
+        //             href: 'adaf',
+        //             title: 'aaa'
+        //           },
+        //           {
+        //             name: '入侵负2',
+        //             title: 'aaa'
+        //           }
+        //         ],
+        //         tag: [1]
+        //       },
+        //       {
+        //         id: 'daszcxfsd',
+        //         name: 'a1',
+        //         info: [
+        //           {
+        //             name: 'asfdaa',
+        //             title: 'aaa'
+        //           },
+        //           {
+        //             name: 'aasgsa',
+        //             title: 'aaa'
+        //           }
+        //         ],
+        //         tag: [2]
+        //       },
+        //       {
+        //         id: 'dasaszxcxcfsd',
+        //         name: 'a1',
+        //         info: [
+        //           {
+        //             name: 'asfdaa',
+        //             title: 'aaa'
+        //           },
+        //           {
+        //             name: 'aasgsa',
+        //             title: 'aaa'
+        //           }
+        //         ],
+        //         tag: [3]
+        //       }
+        //     ],
+        //     adapt: [
+        //       {
+        //         type: '动画',
+        //         href: ''
+        //       }
+        //     ],
+        //     img: [
+        //       {
+        //         id: '1212',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
+        //       },
+        //       {
+        //         id: '1231',
+        //         title: 'Dead Leaves',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
+        //       },
+        //       {
+        //         id: '24323',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
+        //       },
+        //       {
+        //         id: '24ssc323',
+        //         title: 'BLAME!',
+        //         origin: 'a',
+        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
+        //       }
+        //     ]
+        //   }
+        // ],
+        // film: []
       }
     },
     edits: []
@@ -258,6 +259,8 @@ export default new Vuex.Store({
             edit: !!state.edits.find(edit => edit.id === item.id)
           }
         })
+      } else {
+        info = []
       }
       return info
     }
@@ -278,8 +281,9 @@ export default new Vuex.Store({
           id: item.id,
           item: item,
           selected: [],
-          imgs: []
+          imgs: item.img
         }
+        delete edit.item.img
       }
       state.edits.push(edit)
     },
@@ -290,15 +294,19 @@ export default new Vuex.Store({
     setEdit (state, edit) {
       let index = state.edits.findIndex(item => item.id === edit.id)
       state.edits.splice(index, 1, edit)
+    },
+    setItem (state, items) {
+      const route = state.route
+      Vue.set(state.items[route.type], route.subType, state.items[route.type][route.subType].concat(items))
     }
   },
   actions: {
     getType (context, payload) {
-      api.type.getType().then((res) => {
-        context.commit('setSubType', res.data)
+      api.type.index().then((res) => {
+        context.commit('setSubType', res)
 
-        const defaultType = Object.keys(res.data)[0]
-        const defaultSubType = res.data[defaultType][0].name_en
+        const defaultType = Object.keys(res)[0]
+        const defaultSubType = res[defaultType][0].name_en
 
         const route = {
           type: defaultType,
@@ -307,6 +315,19 @@ export default new Vuex.Store({
         context.commit('setRoute', route)
 
         router.push('/' + defaultType + '/' + defaultSubType)
+
+        if (!context.state.items[defaultType][defaultSubType] || context.state.items[defaultType][defaultSubType].length === 0) {
+          context.dispatch('getItem', route)
+        }
+      })
+    },
+    getItem (context) {
+      const route = context.state.route
+
+      const id = context.state.subType[route.type].find(item => item.name_en === route.subType).id
+      const count = context.state.items[route.type][route.subType] ? context.state.items[route.type][route.subType].length : 0
+      api[route.type].index(id, count).then((res) => {
+        context.commit('setItem', res)
       })
     },
     setRoute (context, payload) {

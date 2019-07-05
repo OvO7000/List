@@ -14,7 +14,7 @@ export default {
   name: 'Rank',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     index: {

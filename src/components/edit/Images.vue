@@ -11,7 +11,7 @@
           <i class="fa fa-times"></i>
           <div></div>
         </div>
-        <img :src="img.base64">
+        <img :src="img.base64 || img.compressed">
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
   name: 'EImages',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },
