@@ -9,8 +9,8 @@
       <!--<Figure v-if="type==='figure'" :id="id"></Figure>-->
       <!--images-->
       <Images :id="id"></Images>
+      <Btns :id="id"></Btns>
     </div>
-    <div @click.stop="changeMode">click</div>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ import Images from 'components/edit/Images'
 // import Figure from 'components/edit/Figure'
 import Work from 'components/edit/Work'
 import Rank from 'components/edit/Rank'
+import Btns from 'components/edit/Btns'
 
 export default {
   name: 'Items',
@@ -39,21 +40,6 @@ export default {
   computed: {
     type () {
       return this.$route.path.split('/')[1]
-    },
-    view () {
-      if (this.mode === 'detail') {
-        return {
-          item: this.type,
-          images: 'images',
-          rank: 'rank'
-        }
-      } else {
-        return {
-          item: 'e' + this.type,
-          images: 'eimages',
-          rank: 'erank'
-        }
-      }
     },
     // rank () {
     //   let rank
@@ -89,7 +75,8 @@ export default {
     Images,
     Work,
     // Figure,
-    Rank
+    Rank,
+    Btns
   }
 }
 </script>
@@ -102,6 +89,7 @@ export default {
     &:hover
       background-color: $bgColor
     .container
+      position: relative
       display: flex
       justify-content: center
       height: 130px

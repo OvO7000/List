@@ -85,16 +85,16 @@
       </div>
       <!--submit-->
       <div class="btns">
-        <div class="save btn"  @click="save">
+        <div class="save btn"  @click.stop="save">
           <input type="submit" value="save">
         </div>
-        <div class="cancel btn"  @click="cancel">
+        <div class="cancel btn"  @click.stop="cancel">
           <input type="submit" value="cancel">
         </div>
-        <div class="delete btn"  @click="del">
+        <div class="delete btn"  @click.stop="del">
           <input type="submit" value="delete">
         </div>
-        <div class="add btn"  @click="addSub">
+        <div class="add btn"  @click.stop="addSub">
           <input type="submit" value="+">
         </div>
       </div>
@@ -154,13 +154,11 @@ export default {
           originName: ''
         },
         callback: (data) => {
-          // this.$api.work.exist(data.name).then((res) => {})
           if (!data.name) return
-          let sub = Object.assign({}, this.sub)
+          let sub = {}
+          sub.secret = false
           sub.name = data.name
-          if (data.originName) {
-            sub.originName = data.originName
-          }
+          sub.originName = data.originName
           this.work.sub.push(sub)
         }
       })
@@ -176,8 +174,9 @@ export default {
           // this.$api.work.exist(data.name).then((res) => {})
           if (!data.name) return
           sub.name = data.name
-          if (data.originName) {
-            sub.originName = data.originName
+          sub.originName = data.originName
+          if (data.originName === '') {
+            delete sub.originName
           }
         }
       })
@@ -240,7 +239,7 @@ export default {
           formData.append('ids[]', res[item.index])
         })
         this.$api.img.add(formData).then((res) => {
-          console.log('save')
+          this.cancel()
         }).catch((err) => {
           this.$dlg.alert(err.msg)
         })
@@ -424,9 +423,9 @@ export default {
           input
             color: $fontColor
             font-size: 16px
-            background-color: $menuBgColor
+            background-color: transparent
           &:hover
-            background-color: $mainColor
+            background-color: transparent
             input
-              background-color: $mainColor
+              background-color: transparent
 </style>

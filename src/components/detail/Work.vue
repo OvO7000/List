@@ -128,6 +128,7 @@ export default {
     padding-top: 25px
     width: 400px
     .sub
+      padding-left: 20px
       height: 105px
       .name
         span

@@ -105,8 +105,9 @@ export default {
         callback: (data) => {
           if (!data.name) return
           edit.item.sub[index].name = data.name
-          if (data.originName) {
-            edit.item.sub[index].originName = data.originName
+          edit.item.sub[index].originName = data.originName
+          if (edit.item.sub[index].originName === '') {
+            delete edit.item.sub[index].originName
           }
           this.$store.dispatch('setEdit', edit)
         }
@@ -205,7 +206,8 @@ export default {
       font-size: 16px
       line-height: 30px
     .sub
-      padding: 0 20px
+      padding-left: 20px
+      margin-right: 20px
       height: 105px
       &.selected
         background-color: $mainColor

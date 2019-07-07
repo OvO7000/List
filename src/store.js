@@ -242,7 +242,7 @@ export default new Vuex.Store({
     },
     imgs: (state) => (id) => {
       if (state.route.type && state.route.subType && state.items[state.route.type][state.route.subType]) {
-        return state.items[state.route.type][state.route.subType].find(item => item.id === id).img
+        return state.items[state.route.type][state.route.subType].find(item => item.id === id).imgs
       }
     },
     isRank: (state) => (id) => {
@@ -281,9 +281,9 @@ export default new Vuex.Store({
           id: item.id,
           item: item,
           selected: [],
-          imgs: item.img
+          imgs: item.imgs
         }
-        delete edit.item.img
+        delete edit.item.imgs
       }
       state.edits.push(edit)
     },
@@ -298,6 +298,15 @@ export default new Vuex.Store({
     setItem (state, items) {
       const route = state.route
       Vue.set(state.items[route.type], route.subType, state.items[route.type][route.subType].concat(items))
+    },
+    delItem (state, id) {
+      const type = state.items[state.route.type][state.route.subType]
+      const index = type.findIndex(item => item.id === id)
+      type.splice(index, 1)
+    },
+    delEdit (state, id) {
+      const index = state.edit.findIndex(item => item.id === id)
+      state.edit.splice(index, 1)
     }
   },
   actions: {
@@ -338,6 +347,10 @@ export default new Vuex.Store({
     },
     setEdit (context, edit) {
       context.commit('setEdit', edit)
+    },
+    deleteAll (context, id) {
+      context.commit('delItem', id)
+      context.commit('delEdit', id)
     }
   }
 })

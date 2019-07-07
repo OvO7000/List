@@ -7,7 +7,7 @@ const work = {
   },
   // 编辑
   edit (id, data) {
-    return instance.post(`/api/work/:${id}/edit`, data)
+    return instance.patch(`/api/work/:${id}/edit`, data)
   },
   // 列表
   index (subType, count) {
@@ -20,8 +20,8 @@ const work = {
     return instance.get(`/api/work/index`, config)
   },
   // 删除
-  del (data) {
-    return instance.post(`/api/work/edit`, data)
+  del (id) {
+    return instance.delete(`/api/work/del/${id}`)
   }
 }
 

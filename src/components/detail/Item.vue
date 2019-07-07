@@ -1,14 +1,14 @@
 <template>
   <div class="item" @click="showSubItems">
     <div class="container" ref="container">
-      <div class="rank" v-if="rank"><span>#{{index}}</span></div>
+      <div class="rank"><span v-if="rank">#{{index}}</span></div>
       <Figure :id="id" v-if="type==='figure'"></Figure>
       <Work :id="id" v-if="type==='work'"></Work>
       <Images :id="id"></Images>
     </div>
     <!--submit-->
     <div class="btns">
-      <div class="edit btn"  @click="edit">
+      <div class="edit btn"  @click.stop="edit">
         <input type="submit" value="edit">
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
         background-color: $bgColor
       .rank
         margin-top: 25px
-        width: 100px
+        width: 80px
         span
           font-size: 20px
           line-height: 30px
