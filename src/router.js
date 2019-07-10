@@ -30,9 +30,9 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // subType 还未获取
-  if (!store.state.subType.length) {
+  if (!Object.keys(store.state.subType).length) {
     store.dispatch('getType', to.path)
-    next()
+    return next()
   }
   // 检查路由
   const type = to.path.split('/')[1]

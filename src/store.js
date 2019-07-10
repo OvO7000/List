@@ -16,7 +16,7 @@ export default new Vuex.Store({
       type: '',
       subType: ''
     },
-    subType: [],
+    subType: {},
     items: {
       figure: {
         // writer: [
@@ -90,7 +90,7 @@ export default new Vuex.Store({
         // ]
       },
       work: {
-        comic: []
+        // comic: []
         // comic: [
         //   {
         //     id: 22,
@@ -297,7 +297,10 @@ export default new Vuex.Store({
     },
     setItem (state, items) {
       const route = state.route
-      Vue.set(state.items[route.type], route.subType, state.items[route.type][route.subType].concat(items))
+      if (!state.items[route.type][route.subType]) {
+        Vue.set(state.items[route.type], route.subType, [])
+      }
+      Vue.set(state.items[route.type], route.subType, items.concat(state.items[route.type][route.subType]))
     },
     delItem (state, id) {
       const type = state.items[state.route.type][state.route.subType]
@@ -351,6 +354,12 @@ export default new Vuex.Store({
     deleteAll (context, id) {
       context.commit('delItem', id)
       context.commit('delEdit', id)
+    },
+    editItem (context, id) {
+      const edit = context.state.edits.find(item => item.id === id)
+      api.work.edit(id, edit.item).then((res) => {
+        api.img.edit()
+      })
     }
   }
 })

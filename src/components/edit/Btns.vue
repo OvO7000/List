@@ -43,11 +43,16 @@ export default {
           if (!data.name) return
           let sub = {}
           sub.name = data.name
-          sub.secret = false
           sub.originName = data.originName
-
-          edit.item.sub.push(sub)
-          this.$store.dispatch('setEdit', edit)
+          sub.secret = false
+          if (sub.originName === '') {
+            delete sub.originName
+          }
+          this.$api.sub.add({ ...sub, work: edit.id }).then((res) => {
+            sub.id = res
+            edit.item.sub.push(sub)
+            this.$store.dispatch('setEdit', edit)
+          })
         }
       })
     },
@@ -56,15 +61,18 @@ export default {
       this.$dlg.alert(
         '确认删除？',
         () => {
-          for (let item of edit.selected) {
-            edit.item.sub.splice(item, 1)
-          }
-          if (edit.item.sub.length) {
-            edit.selected = []
-            this.$store.dispatch('setEdit', edit)
-          } else {
+          if (edit.item.sub.length === edit.selected.length) {
             this.$api.work.del(this.id).then(() => {
               this.$store.dispatch('deleteAll', this.id)
+            })
+          } else {
+            this.$api.sub.del(edit.selected).then((res) => {
+              for (let item of edit.selected) {
+                const index = edit.item.sub.findIndex(sub => sub.id === item)
+                edit.item.sub.splice(index, 1)
+              }
+              edit.selected = []
+              this.$store.dispatch('setEdit', edit)
             })
           }
         },
@@ -86,7 +94,9 @@ export default {
         }
       )
     },
-    save () {}
+    save () {
+      this.$api.work.edit(this.id)
+    }
   }
 }
 </script>

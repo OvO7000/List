@@ -1,7 +1,7 @@
 <template>
   <div class="e-work">
     <div
-      :class="['sub', { 'selected': edit.selected.indexOf(index)>=0}]"
+      :class="['sub', { 'selected': edit.selected.indexOf(sub.id)>=0}]"
       v-for="(sub, index) in edit.item.sub"
       :key="index"
       @click.stop="select(index)"
@@ -81,14 +81,15 @@ export default {
   },
   methods: {
     hasImg (index) {
-      return !!this.edit.imgs.find((img) => img.index === index)
+      return !!this.edit.imgs.find((img) => img.sub === this.edit.item.sub[index].id)
     },
     select (index) {
       // 被选中 sub 在 selected 数组中的下标，用于从 selected 删除
-      const i = this.edit.selected.indexOf(index)
+      const id = this.edit.item.sub[index].id
+      const i = this.edit.selected.indexOf(id)
       const edit = Object.assign({}, this.edit)
       if (i === -1) {
-        edit.selected.push(index)
+        edit.selected.push(id)
       } else {
         edit.selected.splice(i, 1)
       }
