@@ -44,17 +44,17 @@
       <!--tag-->
       <div class="tags">
           <span>
-            <i title="alert" class="tag fa fa-exclamation" @click.stop="tag($event, index, 0)"></i>
-            <i title="not perfect complete" class="tag fa fa-tasks" @click.stop="tag($event, index, 1)"></i>
-            <i title="rotten" class="tag fa fa-star-half-o" @click.stop="tag($event, index, 2)"></i>
-            <i title="serials" class="tag fa fa-pencil" @click.stop="tag($event, index, 3)"></i>
+            <i title="alert" class="tag fa fa-exclamation" :style="{'opacity': hasTag(sub, 0)}" @click.stop="tag($event, index, 0)"></i>
+            <i title="not perfect complete" class="tag fa fa-tasks" :style="{'opacity': hasTag(sub, 1)}" @click.stop="tag($event, index, 1)"></i>
+            <i title="rotten" class="tag fa fa-star-half-o" :style="{'opacity': hasTag(sub, 2)}" @click.stop="tag($event, index, 2)"></i>
+            <i title="serials" class="tag fa fa-pencil" :style="{'opacity': hasTag(sub, 3)}" @click.stop="tag($event, index, 3)"></i>
             <i title="secret" class="tag fa fa-eye-slash" @click.stop="secret($event, index)"></i>
           </span>
         <span>
             <i
               title="image"
               :class="['tag','fa','fa-picture-o',{'selected':hasImg(index)}]"
-              @click.stop="selectImg($event, index)"></i>
+              @click.stop="selectImg($event, sub)"></i>
           </span>
       </div>
     </div>
@@ -82,6 +82,9 @@ export default {
   methods: {
     hasImg (index) {
       return !!this.edit.imgs.find((img) => img.sub === this.edit.item.sub[index].id)
+    },
+    hasTag (sub, index) {
+      return (sub.tag && sub.tag.indexOf(index) >= 0) ? 1 : 0.5
     },
     select (index) {
       // 被选中 sub 在 selected 数组中的下标，用于从 selected 删除
@@ -153,11 +156,9 @@ export default {
       if (i !== -1) {
         // 删除 tag
         edit.item.sub[index].tag.splice(i, 1)
-        e.target.style.opacity = '0.5'
       } else {
         // 添加 tag
         edit.item.sub[index].tag.push(tag)
-        e.target.style.opacity = '1'
       }
       if (!edit.item.sub[index].tag.length) {
         delete edit.item.sub[index].tag
@@ -175,20 +176,19 @@ export default {
       }
       this.$store.dispatch('setEdit', edit)
     },
-    selectImg (e, subIndex) {
+    selectImg (e, sub) {
       const edit = Object.assign({}, this.edit)
 
       this.$util.imgUploader().then((res) => {
-        res.index = subIndex
-        const img = edit.imgs.find((img) => img.index === subIndex)
-        if (img) {
+        res.sub = sub.id
+        const imgIndex = edit.imgs.findIndex((img) => img.sub === sub.id)
+        if (imgIndex >= 0) {
           // sub已有图片
-          const index = edit.imgs.indexOf(img)
-          edit.imgs.splice(index, 1, res)
+          edit.imgs.splice(imgIndex, 1, res)
         } else {
           // sub没有图片
           edit.imgs.push(res)
-          edit.imgs.sort((a, b) => a.index - b.index)
+          edit.imgs.sort((a, b) => a.sub - b.sub)
         }
         this.$store.dispatch('setEdit', edit)
       })

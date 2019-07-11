@@ -317,18 +317,18 @@ export default new Vuex.Store({
       api.type.index().then((res) => {
         context.commit('setSubType', res)
 
-        const defaultType = Object.keys(res)[0]
-        const defaultSubType = res[defaultType][0].name_en
+        const type = payload.split('/')[1]
+        const subType = payload.split('/')[2]
 
         const route = {
-          type: defaultType,
-          subType: defaultSubType
+          type: type,
+          subType: subType
         }
         context.commit('setRoute', route)
 
-        router.push('/' + defaultType + '/' + defaultSubType)
+        router.push('/' + type + '/' + subType)
 
-        if (!context.state.items[defaultType][defaultSubType] || context.state.items[defaultType][defaultSubType].length === 0) {
+        if (!context.state.items[type][subType] || context.state.items[type][subType].length === 0) {
           context.dispatch('getItem', route)
         }
       })

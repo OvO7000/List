@@ -95,7 +95,9 @@ export default {
       )
     },
     save () {
-      this.$api.work.edit(this.id)
+      this.$api.work.edit(this.id, this.edit.item).then((res) => {
+        console.log(res)
+      })
     }
   }
 }

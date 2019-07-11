@@ -35,6 +35,7 @@ router.beforeEach((to, from, next) => {
     return next()
   }
   // 检查路由
+  console.log('t')
   const type = to.path.split('/')[1]
   const subType = to.path.split('/')[2]
   const route = {

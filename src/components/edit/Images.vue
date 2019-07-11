@@ -4,7 +4,7 @@
       class="image"
       v-for="(img, index) in edit.imgs"
       :key="index"
-      @click="deleteImg(img.index, index)"
+      @click="deleteImg(img, index)"
     >
       <div class="inner">
         <div class="mask">
@@ -32,12 +32,14 @@ export default {
     }
   },
   methods: {
-    deleteImg (subIndex, index) {
+    deleteImg (img, index) {
       const edit = Object.assign({}, this.edit)
-      if (edit.imgs[index].index === subIndex) {
-        edit.imgs.splice(index, 1)
+      if (edit.imgs.find(item => item.id === img.id)) {
+        this.$api.img.del(img.id).then((res) => {
+          edit.imgs.splice(index, 1)
+          this.$store.dispatch('setEdit', edit)
+        })
       }
-      this.$store.dispatch('setEdit', edit)
     }
   }
 }
