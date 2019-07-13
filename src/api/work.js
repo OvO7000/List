@@ -7,7 +7,7 @@ const work = {
   },
   // 编辑
   edit (id, data) {
-    return instance.patch(`/api/work/edit/:${id}`, data)
+    return instance.patch(`/api/work/edit/${id}`, data)
   },
   // 列表
   index (subType, count) {

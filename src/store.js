@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from 'router'
+// import router from 'router'
 import api from 'api/index'
 
 Vue.use(Vuex)
@@ -295,7 +295,7 @@ export default new Vuex.Store({
       let index = state.edits.findIndex(item => item.id === edit.id)
       state.edits.splice(index, 1, edit)
     },
-    setItem (state, items) {
+    setItems (state, items) {
       const route = state.route
       if (!state.items[route.type][route.subType]) {
         Vue.set(state.items[route.type], route.subType, [])
@@ -307,30 +307,20 @@ export default new Vuex.Store({
       const index = type.findIndex(item => item.id === id)
       type.splice(index, 1)
     },
+    setItem (state, payload) {
+      const type = state.items[state.route.type][state.route.subType]
+      const index = type.findIndex(item => item.id === payload.id)
+      type.splice(index, 1, payload)
+    },
     delEdit (state, id) {
-      const index = state.edit.findIndex(item => item.id === id)
-      state.edit.splice(index, 1)
+      const index = state.edits.findIndex(item => item.id === id)
+      state.edits.splice(index, 1)
     }
   },
   actions: {
-    getType (context, payload) {
-      api.type.index().then((res) => {
+    getType (context) {
+      return api.type.index().then((res) => {
         context.commit('setSubType', res)
-
-        const type = payload.split('/')[1]
-        const subType = payload.split('/')[2]
-
-        const route = {
-          type: type,
-          subType: subType
-        }
-        context.commit('setRoute', route)
-
-        router.push('/' + type + '/' + subType)
-
-        if (!context.state.items[type][subType] || context.state.items[type][subType].length === 0) {
-          context.dispatch('getItem', route)
-        }
       })
     },
     getItem (context) {
@@ -339,7 +329,7 @@ export default new Vuex.Store({
       const id = context.state.subType[route.type].find(item => item.name_en === route.subType).id
       const count = context.state.items[route.type][route.subType] ? context.state.items[route.type][route.subType].length : 0
       api[route.type].index(id, count).then((res) => {
-        context.commit('setItem', res)
+        context.commit('setItems', res)
       })
     },
     setRoute (context, payload) {
@@ -351,15 +341,15 @@ export default new Vuex.Store({
     setEdit (context, edit) {
       context.commit('setEdit', edit)
     },
+    setItem (context, item) {
+      context.commit('setItem', item)
+    },
+    delEdit (context, id) {
+      context.commit('delEdit', id)
+    },
     deleteAll (context, id) {
       context.commit('delItem', id)
       context.commit('delEdit', id)
-    },
-    editItem (context, id) {
-      const edit = context.state.edits.find(item => item.id === id)
-      api.work.edit(id, edit.item).then((res) => {
-        api.img.edit()
-      })
     }
   }
 })

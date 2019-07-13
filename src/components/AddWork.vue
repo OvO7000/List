@@ -113,13 +113,6 @@ export default {
         // adapt: [],
         sub: []
       },
-      sub: {
-        name: '',
-        // originName: '',
-        // info: [],
-        // tag: [],
-        secret: false
-      },
       imgs: [],
       selected: []
     }
@@ -138,8 +131,9 @@ export default {
           if (!data.name) return
           let sub = Object.assign({}, this.sub)
           sub.name = data.name
-          if (data.originName) {
-            sub.originName = data.originName
+          sub.originName = data.originName
+          if (data.originName === '') {
+            delete sub.originName
           }
           this.work.sub.push(sub)
           this.show = true
@@ -159,6 +153,9 @@ export default {
           sub.secret = false
           sub.name = data.name
           sub.originName = data.originName
+          if (data.originName === '') {
+            delete sub.originName
+          }
           this.work.sub.push(sub)
         }
       })
@@ -238,7 +235,7 @@ export default {
           formData.append('imgs', item.file)
           formData.append('ids[]', res[item.index])
         })
-        this.$api.img.add(formData).then((res) => {
+        this.$api.img.adds(formData).then((res) => {
           this.cancel()
         }).catch((err) => {
           this.$dlg.alert(err.msg)

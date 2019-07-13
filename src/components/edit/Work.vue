@@ -44,10 +44,10 @@
       <!--tag-->
       <div class="tags">
           <span>
-            <i title="alert" class="tag fa fa-exclamation" :style="{'opacity': hasTag(sub, 0)}" @click.stop="tag($event, index, 0)"></i>
-            <i title="not perfect complete" class="tag fa fa-tasks" :style="{'opacity': hasTag(sub, 1)}" @click.stop="tag($event, index, 1)"></i>
-            <i title="rotten" class="tag fa fa-star-half-o" :style="{'opacity': hasTag(sub, 2)}" @click.stop="tag($event, index, 2)"></i>
-            <i title="serials" class="tag fa fa-pencil" :style="{'opacity': hasTag(sub, 3)}" @click.stop="tag($event, index, 3)"></i>
+            <i title="alert" class="tag fa fa-exclamation" :style="{'opacity': hasTag(sub, 0)}" @click.stop="tag(index, 0)"></i>
+            <i title="not perfect complete" class="tag fa fa-tasks" :style="{'opacity': hasTag(sub, 1)}" @click.stop="tag(index, 1)"></i>
+            <i title="rotten" class="tag fa fa-star-half-o" :style="{'opacity': hasTag(sub, 2)}" @click.stop="tag(index, 2)"></i>
+            <i title="serials" class="tag fa fa-pencil" :style="{'opacity': hasTag(sub, 3)}" @click.stop="tag(index, 3)"></i>
             <i title="secret" class="tag fa fa-eye-slash" @click.stop="secret($event, index)"></i>
           </span>
         <span>
@@ -81,7 +81,14 @@ export default {
   },
   methods: {
     hasImg (index) {
-      return !!this.edit.imgs.find((img) => img.sub === this.edit.item.sub[index].id)
+      return !!this.edit.imgs.find((img) => {
+        if (img.sub === this.edit.item.sub[index].id) {
+          if (img.compressed || img.file) {
+            return true
+          }
+        }
+        return false
+      })
     },
     hasTag (sub, index) {
       return (sub.tag && sub.tag.indexOf(index) >= 0) ? 1 : 0.5
@@ -147,7 +154,7 @@ export default {
       }
       this.$store.dispatch('setEdit', edit)
     },
-    tag (e, index, tag) {
+    tag (index, tag) {
       const edit = Object.assign({}, this.edit)
       if (!edit.item.sub[index].tag) {
         edit.item.sub[index].tag = []
@@ -182,11 +189,15 @@ export default {
       this.$util.imgUploader().then((res) => {
         res.sub = sub.id
         const imgIndex = edit.imgs.findIndex((img) => img.sub === sub.id)
-        if (imgIndex >= 0) {
+        const img = edit.imgs.find((img) => img.sub === sub.id)
+        if (img) {
           // sub已有图片
+          if (img.id) {
+            res.id = img.id
+          }
           edit.imgs.splice(imgIndex, 1, res)
         } else {
-          // sub没有图片
+          // sub没有图片, 则新增图片
           edit.imgs.push(res)
           edit.imgs.sort((a, b) => a.sub - b.sub)
         }

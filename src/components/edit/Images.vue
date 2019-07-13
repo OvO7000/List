@@ -34,12 +34,14 @@ export default {
   methods: {
     deleteImg (img, index) {
       const edit = Object.assign({}, this.edit)
-      if (edit.imgs.find(item => item.id === img.id)) {
-        this.$api.img.del(img.id).then((res) => {
-          edit.imgs.splice(index, 1)
-          this.$store.dispatch('setEdit', edit)
-        })
+      if (edit.imgs[index].id) {
+        // 删除已保存的图片
+        delete edit.imgs[index].compressed
+      } else {
+        // 删除未保存的图片
+        edit.imgs.splice(index, 1)
       }
+      this.$store.dispatch('setEdit', edit)
     }
   }
 }

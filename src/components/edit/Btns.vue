@@ -69,7 +69,9 @@ export default {
             this.$api.sub.del(edit.selected).then((res) => {
               for (let item of edit.selected) {
                 const index = edit.item.sub.findIndex(sub => sub.id === item)
+                const imgIndex = edit.imgs.findIndex(img => img.sub === item)
                 edit.item.sub.splice(index, 1)
+                edit.imgs.splice(imgIndex, 1)
               }
               edit.selected = []
               this.$store.dispatch('setEdit', edit)
@@ -89,14 +91,48 @@ export default {
             this.$store.dispatch('deleteAll', this.id)
           })
         },
-        {
-          messageType: 'confirm'
-        }
+        { messageType: 'confirm' }
       )
     },
     save () {
-      this.$api.work.edit(this.id, this.edit.item).then((res) => {
-        console.log(res)
+      this.$api.work.edit(this.id, this.edit.item).then(async (res) => {
+        let imgsHandle = this.edit.imgs.map(async (img) => {
+          // 新增图片，没有id，有file
+          if (img.file && !img.id) {
+            let formData = new FormData()
+            formData.append('img', img.file)
+            formData.append('sub', img.sub)
+            let result = await this.$api.img.add(formData)
+            return result
+            // })
+            // await this.$api.img.add(formData).then((res) => {
+            //   console.log(res)
+            //   return res
+            // })
+          }
+          // 修改图片，有id，有file
+          if (img.file && img.id) {
+            let formData = new FormData()
+            formData.append('img', img.file)
+            formData.append('id', img.id)
+            formData.append('sub', img.sub)
+            let result = await this.$api.img.edit(img.id, formData)
+            return result
+          }
+          // 删除图片， 有id，没有file、compressed
+          if (img.id && !img.file && !img.compressed) {
+            await this.$api.img.del(img.id)
+          }
+          if (img.id && img.compressed) {
+            return img
+          }
+        })
+
+        let result = await Promise.all(imgsHandle)
+
+        this.edit.item.imgs = result.filter(item => item instanceof Object)
+        this.$store.dispatch('setItem', this.edit.item)
+        this.$store.dispatch('delEdit', this.edit.id)
       })
     }
   }
