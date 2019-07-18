@@ -6,7 +6,7 @@
         :key="img.id"
       >
         <div class="inner">
-          <img :src="img.compressed" :alt="img.title" :title="img.title">
+          <img :src="img" :alt="img.title" :title="img.title">
         </div>
       </div>
     </div>

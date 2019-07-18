@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
   store.dispatch('setRoute', route).then(() => {
     // 检查 item 是否已存在
     if (!store.state.items[type][subType] || store.state.items[type][subType] === 0) {
-      store.dispatch('getItem', route)
+      store.dispatch('getItems', route)
     }
     next()
   })

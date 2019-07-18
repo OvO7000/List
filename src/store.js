@@ -323,7 +323,7 @@ export default new Vuex.Store({
         context.commit('setSubType', res)
       })
     },
-    getItem (context) {
+    getItems (context) {
       const route = context.state.route
 
       const id = context.state.subType[route.type].find(item => item.name_en === route.subType).id

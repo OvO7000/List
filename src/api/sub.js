@@ -1,6 +1,16 @@
 import instance from './instance'
 
 const sub = {
+  // 列表
+  index (query, subType) {
+    const config = {
+      params: {
+        query: query,
+        subType: subType
+      }
+    }
+    return instance.get(`/api/sub/index`, config)
+  },
   // 保存
   add (data) {
     return instance.post(`/api/sub/add`, data)

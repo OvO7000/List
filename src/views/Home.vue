@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <Header></Header>
-    <AddWork></AddWork>
+    <AddWork v-if="type==='work'"></AddWork>
+    <AddFigure v-else></AddFigure>
     <router-view
       v-for="(info, index) in infos"
       :key="info.id"
@@ -17,6 +18,7 @@ import Header from 'components/Header'
 // import Item from 'components/Item'
 // import Test from 'components/Test'
 import AddWork from 'components/AddWork'
+import AddFigure from 'components/AddFigure'
 
 export default {
   name: 'home',
@@ -70,7 +72,8 @@ export default {
     Header,
     // Item,
     // Test,
-    AddWork
+    AddWork,
+    AddFigure
   }
 }
 </script>

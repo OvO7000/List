@@ -129,7 +129,8 @@ export default {
           // this.$api.work.exist(data.name).then((res) => {})
           // 没有输入名字
           if (!data.name) return
-          let sub = Object.assign({}, this.sub)
+          let sub = {}
+          sub.secret = false
           sub.name = data.name
           sub.originName = data.originName
           if (data.originName === '') {
