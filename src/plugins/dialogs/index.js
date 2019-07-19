@@ -34,10 +34,10 @@ const Plugin = {
     //  console.log(Vue)
 
     Vue.prototype[instanceName] = {
-      modal (params = {}) {
+      modal (params = {}, component) {
         // if (!component) return
         params = mergeParams(params)
-        // params.component = component
+        params.component = component
         return dlg.addModal(params)
       },
       /**

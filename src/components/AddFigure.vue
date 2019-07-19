@@ -127,7 +127,7 @@ export default {
       })
     },
     addWork () {
-      this.$dlg.modal(Link, {
+      this.$dlg.modal({
         title: 'work',
         callback: (data) => {
           // this.$api.work.exist(data.name).then((res) => {})
@@ -145,7 +145,7 @@ export default {
           this.figure.work.push(work)
           this.imgs.push(img)
         }
-      })
+      }, Link)
     },
     deleteWork () {
     },

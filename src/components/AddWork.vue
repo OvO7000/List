@@ -201,6 +201,9 @@ export default {
       })
     },
     deleteInfo (sub, index) {
+      if (sub.info.length === 0) {
+        this.delete(sub, 'info')
+      }
       this.$delete(sub.info, index)
     },
     selectImg (e, subIndex) {

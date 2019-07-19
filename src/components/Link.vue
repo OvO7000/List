@@ -5,11 +5,13 @@
           type="text"
           class="text"
           @keyup.enter="getSubs"
-          v-model.trim="text"><select v-model="selected">
+          v-model.trim="params.text"><select v-model="selected">
           <option
             v-for="(type, typeIndex) in workType"
             :key="typeIndex"
-            value="type.id">{{type.name}}</option>
+            :value="type.id"
+            :selected="typeIndex===0"
+          >{{type.name}}</option>
         </select>
       </div>
       <div class="subs">
@@ -64,8 +66,10 @@
 </template>
 
 <script>
+import store from '@/store.js'
 export default {
   name: 'Link',
+  store,
   props: {
     params: {
       type: Object,
@@ -78,7 +82,7 @@ export default {
   },
   data () {
     return {
-      selected: this.workType[0].id,
+      selected: '',
       text: this.params.text,
       subs: []
     }
@@ -144,21 +148,29 @@ export default {
 
   .link
     .text
-      width: 80%
+      width: 400px
+      height: 24px
       font-size: 16px
-      margin-top: 25px
+      margin: 25px 20px 0 0
       color: #ccc
       text-align: center
+      border: none
       border-bottom: 1px solid #ccc
     select
-      width: 20%
+      width: 220px
+      height: 25px
       font-size: 16px
       margin-top: 25px
       color: #ccc
       text-align: center
+      text-align-last: center
       border-bottom: 1px solid #ccc
+      option
+        background-color: transparent
     .subs
       .sub
+        display: flex
+        justify-content: center
         .content
           width: 400px
           height: 105px
@@ -185,7 +197,6 @@ export default {
               display: inline-block
               padding-right: 15px
         .image
-          flex: 0 0 auto
           width: 220px
           height: $itemHeight
           .inner
