@@ -1,25 +1,25 @@
 <template>
     <div class="link">
-      <div>
+      <div class="options">
         <input
           type="text"
           class="text"
           @keyup.enter="getSubs"
-          v-model.trim="params.text"><select v-model="selected">
-          <option
+          v-model.trim="text"><VSelect v-model="selected" class="select">
+          <VOption
             v-for="(type, typeIndex) in workType"
             :key="typeIndex"
             :value="type.id"
-            :selected="typeIndex===0"
-          >{{type.name}}</option>
-        </select>
+            :label="type.name"
+          >{{type.name}}</VOption>
+        </VSelect>
       </div>
       <div class="subs">
         <div
-          class="sub"
           v-for="(sub, subIndex) in subs"
           :key="subIndex"
           @click.stop="setSub(sub)"
+          :class="['sub',{'selected':isSelected(sub)}]"
         >
           <div class="content">
             <!--name-->
@@ -67,6 +67,8 @@
 
 <script>
 import store from '@/store.js'
+import VSelect from 'components/VSelect'
+import VOption from 'components/VOption'
 export default {
   name: 'Link',
   store,
@@ -120,8 +122,8 @@ export default {
       }
     },
     getSubs () {
-      if (this.params && this.params.text && this.params.text !== '') {
-        this.$api.sub.index(this.params.text, this.selected).then((res) => {
+      if (this.text && this.text !== '') {
+        this.$api.sub.index(this.text, this.selected).then((res) => {
           this.subs = res
         }).catch((err) => {
           this.$dlg.toast(err)
@@ -129,16 +131,39 @@ export default {
       }
     },
     setSub (sub) {
-      this.params.sub = {
-        id: sub.id,
-        subType: sub.subType,
-        name: sub.name,
-        img: sub.img
+      if (!this.params.sub) {
+        this.$set(this.params, 'sub', [])
       }
+      let subIndex = this.params.sub.findIndex(item => item.id === sub.id)
+      if (subIndex >= 0) {
+        this.params.sub.splice(subIndex, 1)
+      } else {
+        let item = {
+          id: sub.id,
+          subType: sub.subType,
+          name: sub.name,
+          img: sub.img
+        }
+        this.params.sub.push(item)
+      }
+      if (this.params.sub.length === 0) {
+        delete this.params.sub
+      }
+    },
+    isSelected (sub) {
+      if (this.params.sub) {
+        let subIndex = this.params.sub.findIndex(item => item.id === sub.id)
+        return subIndex >= 0
+      }
+      return false
     }
   },
   mounted () {
     this.getSubs()
+  },
+  components: {
+    VSelect: VSelect,
+    VOption: VOption
   }
 }
 </script>
@@ -147,35 +172,34 @@ export default {
   @import '~styles/variables.styl'
 
   .link
-    .text
-      width: 400px
-      height: 24px
-      font-size: 16px
-      margin: 25px 20px 0 0
-      color: #ccc
-      text-align: center
-      border: none
-      border-bottom: 1px solid #ccc
-    select
-      width: 220px
-      height: 25px
-      font-size: 16px
-      margin-top: 25px
-      color: #ccc
-      text-align: center
-      text-align-last: center
-      border-bottom: 1px solid #ccc
-      option
-        background-color: transparent
+    .options
+      display: flex
+      align-items: flex-start
+      .text
+        width: 400px
+        height: 24px
+        font-size: 16px
+        margin: 25px 20px 0 0
+        color: #ccc
+        text-align: center
+        border: none
+        border-bottom: 1px solid #ccc
+      .select
+        width: 220px
+        margin-top: 25px
     .subs
+      min-height: 260px
+      padding-top: 5px
       .sub
         display: flex
         justify-content: center
+        padding: 0 10px
+        &.selected
+          background-color: #717171
         .content
           width: 400px
           height: 105px
           padding-top: 25px
-          padding-left: 20px
           .name
             span
               font-size: 16px

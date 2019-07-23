@@ -56,7 +56,7 @@
           :key="index"
         >
           <div class="inner">
-            <img :src="img.base64">
+            <img :src="img">
           </div>
         </div>
       </div>
@@ -130,20 +130,22 @@ export default {
       this.$dlg.modal({
         title: 'work',
         callback: (data) => {
-          // this.$api.work.exist(data.name).then((res) => {})
           // 没有输入名字
-          if (!data.sub || !data.sub.id) return
+          if (!data.sub) return
+          console.log(data)
           if (!this.figure.work) {
             this.$set(this.figure, 'work', [])
           }
-          let work = {
-            id: data.sub.id,
-            subType: data.sub.subType,
-            name: data.sub.name
-          }
-          let img = data.sub.img
-          this.figure.work.push(work)
-          this.imgs.push(img)
+          data.sub.map((item, index) => {
+            let work = {
+              id: item.id,
+              subType: item.subType,
+              name: item.name
+            }
+            let img = item.img
+            this.figure.work.push(work)
+            this.imgs.push(img)
+          })
         }
       }, Link)
     },
@@ -176,6 +178,7 @@ export default {
     save () {
       const figure = this.figure
       figure.subType = this.$route.path.split('/')[2]
+      figure.work = figure.work.map(work => work.id)
       this.$api.figure.add(this.figure).then((res) => {
         this.cancel()
       }).catch((err) => {

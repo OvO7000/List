@@ -18,7 +18,7 @@
                 <h3 v-text="titleBar"></h3>
               </div>
               <div class="v-dialog-body">
-                <component :is="component" :params="params" @close="modalClose"></component>
+                <component :is="component" :params.sync="params" @close="modalClose"></component>
               </div>
             </div>
             <button type="button" class="v-dialog-btn__confirm"
@@ -54,7 +54,12 @@ export default {
      * Send parameters to Component
      * you need use props to receive this params in component
      */
-    params: Object,
+    params: {
+      type: Object,
+      default () {
+        return {}
+      }
+    },
     /**
      * Full screen dialog
      * @type boolean

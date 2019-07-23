@@ -32,6 +32,7 @@ module.exports = {
       .set('styles', resolve('src/style'))
       .set('api', resolve('src/api'))
       .set('plugins', resolve('src/plugins'))
+      .set('mixins', resolve('src/mixins'))
   },
   css: {
     modules: false,
