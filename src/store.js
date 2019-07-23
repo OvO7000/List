@@ -275,12 +275,19 @@ export default new Vuex.Store({
     },
     setEdits (state, id) {
       let edit
-      let item = Object.assign({}, state.items[state.route.type][state.route.subType].find(item => item.id === id))
+      let item = state.items[state.route.type][state.route.subType].find(item => item.id === id)
       if (state.route.type === 'work') {
         edit = {
           id: item.id,
           item: item,
           selected: [],
+          imgs: item.imgs
+        }
+        delete edit.item.imgs
+      } else if (state.route.type === 'figure') {
+        edit = {
+          id: item.id,
+          item: item,
           imgs: item.imgs
         }
         delete edit.item.imgs

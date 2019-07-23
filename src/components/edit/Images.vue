@@ -4,10 +4,13 @@
       class="image"
       v-for="(img, index) in edit.imgs"
       :key="index"
-      @click="deleteImg(img, index)"
     >
       <div class="inner">
-        <div class="mask">
+        <div
+          class="mask"
+          @click="deleteImg(img, index)"
+          v-if="type === 'work'"
+        >
           <i class="fa fa-times"></i>
           <div></div>
         </div>
@@ -29,6 +32,9 @@ export default {
   computed: {
     edit () {
       return this.$store.getters.edit(this.id)
+    },
+    type () {
+      return this.$route.path.split('/')[1]
     }
   },
   methods: {

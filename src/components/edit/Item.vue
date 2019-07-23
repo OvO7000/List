@@ -6,20 +6,22 @@
       <Rank :id="id" :index="index"></Rank>
       <!--item-->
       <Work v-if="type==='work'" :id="id"></Work>
-      <!--<Figure v-if="type==='figure'" :id="id"></Figure>-->
+      <Figure v-if="type==='figure'" :id="id"></Figure>
       <!--images-->
       <Images :id="id"></Images>
-      <Btns :id="id"></Btns>
+      <Btns :id="id" v-if="type==='work'"></Btns>
+      <FigureBtns :id="id" v-if="type==='figure'"></FigureBtns>
     </div>
   </div>
 </template>
 
 <script>
 import Images from 'components/edit/Images'
-// import Figure from 'components/edit/Figure'
+import Figure from 'components/edit/Figure'
 import Work from 'components/edit/Work'
 import Rank from 'components/edit/Rank'
 import Btns from 'components/edit/Btns'
+import FigureBtns from 'components/edit/FigureBtns'
 
 export default {
   name: 'Items',
@@ -74,9 +76,10 @@ export default {
   components: {
     Images,
     Work,
-    // Figure,
+    Figure,
     Rank,
-    Btns
+    Btns,
+    FigureBtns
   }
 }
 </script>

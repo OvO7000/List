@@ -19,9 +19,10 @@
           <i class="icon fa fa-star" @click.stop="addWork"></i>
           <a
             class="work"
-            v-for="work in figure.work"
+            v-for="(work, index) in figure.work"
             :key="work.id"
             :title="work.title"
+            @click.stop="deleteWork(work, index)"
           >{{work.name}}</a>
         </div>
         <div class="works" v-else>
@@ -36,6 +37,7 @@
             v-for="(link, index) in figure.link"
             :key="index"
             :href="link.href"
+            @click.stop="deleteLink(index)"
           >{{link.name}}</a>
         </div>
         <div class="links" v-else  @click.stop="addLink">
@@ -56,7 +58,7 @@
           :key="index"
         >
           <div class="inner">
-            <img :src="img">
+            <img :src="img.compressed">
           </div>
         </div>
       </div>
@@ -130,9 +132,7 @@ export default {
       this.$dlg.modal({
         title: 'work',
         callback: (data) => {
-          // 没有输入名字
           if (!data.sub) return
-          console.log(data)
           if (!this.figure.work) {
             this.$set(this.figure, 'work', [])
           }
@@ -142,14 +142,20 @@ export default {
               subType: item.subType,
               name: item.name
             }
-            let img = item.img
+            let img = {
+              compressed: item.img,
+              work: item.id
+            }
             this.figure.work.push(work)
             this.imgs.push(img)
           })
         }
       }, Link)
     },
-    deleteWork () {
+    deleteWork (work, index) {
+      this.figure.work.splice(index, 1)
+      let imgIndex = this.imgs.findIndex(item => item.id === work.id)
+      this.figure.imgs.splice(imgIndex, 1)
     },
     addLink () {
       this.$dlg.modal({
@@ -173,7 +179,8 @@ export default {
         }
       })
     },
-    deleteLink () {
+    deleteLink (index) {
+      this.figure.link.splice(index, 1)
     },
     save () {
       const figure = this.figure
