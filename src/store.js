@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import router from 'router'
+import createPersistedState from 'vuex-persistedstate'
 import api from 'api/index'
 
 Vue.use(Vuex)
@@ -8,8 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      name: '',
-      token: 'asdadwawdad'
+      level: 0,
+      token: ''
     },
     route: {
       id: '',
@@ -18,216 +18,8 @@ export default new Vuex.Store({
     },
     subType: {},
     items: {
-      figure: {
-        // writer: [
-        //   {
-        //     id: 11,
-        //     name: '麦克 米格诺拉',
-        //     originName: 'Michael Mignola',
-        //     info: {
-        //       work: [
-        //         {
-        //           id: 'aaa',
-        //           name: 'aaa',
-        //           href: 'asa',
-        //           title: 'aaa'
-        //         }
-        //       ],
-        //       link: [
-        //         {
-        //           name: 'Pixiv',
-        //           href: 'www'
-        //         }
-        //       ]
-        //     },
-        //     img: [
-        //       {
-        //         id: '1212',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
-        //       },
-        //       {
-        //         id: '1231',
-        //         title: 'Dead Leaves',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
-        //       },
-        //       {
-        //         id: '24323',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-        //       }
-        //     ]
-        //   },
-        //   {
-        //     id: 12,
-        //     name: 'a',
-        //     info: {
-        //     },
-        //     imgs: [
-        //       {
-        //         id: '1321',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
-        //       },
-        //       {
-        //         id: '234',
-        //         title: 'Dead Leaves',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
-        //       },
-        //       {
-        //         id: '2413',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-        //       }
-        //     ]
-        //   }
-        // ]
-      },
-      work: {
-        // comic: []
-        // comic: [
-        //   {
-        //     id: 22,
-        //     rank: true,
-        //     name: 'a',
-        //     sub: [
-        //       {
-        //         id: 'asdas',
-        //         name: '入侵负责',
-        //         originName: 'adad afafas',
-        //         info: [
-        //           {
-        //             name: '负责',
-        //             href: 'adaf',
-        //             title: 'aaa'
-        //           },
-        //           {
-        //             name: '入侵负2',
-        //             title: 'aaa'
-        //           }
-        //         ],
-        //         tag: [1, 2]
-        //       },
-        //       {
-        //         id: 'dasfsd',
-        //         name: 'a1',
-        //         info: [
-        //           {
-        //             name: 'asfdaa',
-        //             title: 'aaa'
-        //           },
-        //           {
-        //             name: 'aasgsa',
-        //             title: 'aaa'
-        //           }
-        //         ],
-        //         tag: [0, 1, 2, 3]
-        //       },
-        //       {
-        //         id: 'dasasfsd',
-        //         name: 'a1',
-        //         info: [
-        //           {
-        //             name: 'asfdaa',
-        //             title: 'aaa'
-        //           },
-        //           {
-        //             name: 'aasgsa',
-        //             title: 'aaa'
-        //           }
-        //         ],
-        //         tag: [0]
-        //       },
-        //       {
-        //         id: 'azasdas',
-        //         name: '入侵负责',
-        //         originName: 'adad afafas',
-        //         info: [
-        //           {
-        //             name: '入侵负责',
-        //             href: 'adaf',
-        //             title: 'aaa'
-        //           },
-        //           {
-        //             name: '入侵负2',
-        //             title: 'aaa'
-        //           }
-        //         ],
-        //         tag: [1]
-        //       },
-        //       {
-        //         id: 'daszcxfsd',
-        //         name: 'a1',
-        //         info: [
-        //           {
-        //             name: 'asfdaa',
-        //             title: 'aaa'
-        //           },
-        //           {
-        //             name: 'aasgsa',
-        //             title: 'aaa'
-        //           }
-        //         ],
-        //         tag: [2]
-        //       },
-        //       {
-        //         id: 'dasaszxcxcfsd',
-        //         name: 'a1',
-        //         info: [
-        //           {
-        //             name: 'asfdaa',
-        //             title: 'aaa'
-        //           },
-        //           {
-        //             name: 'aasgsa',
-        //             title: 'aaa'
-        //           }
-        //         ],
-        //         tag: [3]
-        //       }
-        //     ],
-        //     adapt: [
-        //       {
-        //         type: '动画',
-        //         href: ''
-        //       }
-        //     ],
-        //     img: [
-        //       {
-        //         id: '1212',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/BLAME!.jpg'
-        //       },
-        //       {
-        //         id: '1231',
-        //         title: 'Dead Leaves',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Dead Leaves.jpg'
-        //       },
-        //       {
-        //         id: '24323',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-        //       },
-        //       {
-        //         id: '24ssc323',
-        //         title: 'BLAME!',
-        //         origin: 'a',
-        //         compressed: 'http://img.list.ovo7.cn/compressed/Invader Zim1.jpg'
-        //       }
-        //     ]
-        //   }
-        // ],
-        // film: []
-      }
+      figure: {},
+      work: {}
     },
     edits: []
   },
@@ -298,6 +90,9 @@ export default new Vuex.Store({
       let item = state.edits.find(item => item.id === id).item
       item.rank = !item.rank
     },
+    setUser (state, info) {
+      state.user = info
+    },
     setEdit (state, edit) {
       let index = state.edits.findIndex(item => item.id === edit.id)
       state.edits.splice(index, 1, edit)
@@ -322,6 +117,10 @@ export default new Vuex.Store({
     delEdit (state, id) {
       const index = state.edits.findIndex(item => item.id === id)
       state.edits.splice(index, 1)
+    },
+    logOut (state) {
+      state.user.level = 0
+      state.user.token = ''
     }
   },
   actions: {
@@ -342,6 +141,15 @@ export default new Vuex.Store({
     setRoute (context, payload) {
       context.commit('setRoute', payload)
     },
+    getUser (context, payload) {
+      api.user.login(payload).then((res) => {
+        context.commit('setUser', res)
+        context.dispatch('getType')
+      })
+    },
+    logOut (context) {
+      context.commit('logOut')
+    },
     setEdits (context, id) {
       context.commit('setEdits', id)
     },
@@ -358,5 +166,6 @@ export default new Vuex.Store({
       context.commit('delItem', id)
       context.commit('delEdit', id)
     }
-  }
+  },
+  plugins: [createPersistedState({ storage: window.sessionStorage })]
 })

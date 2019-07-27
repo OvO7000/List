@@ -16,7 +16,7 @@ instance.defaults.headers.put['Content-Type'] = 'application/json'
  */
 instance.interceptors.request.use(
   config => {
-    const token = store.state.token
+    const token = store.state.user.token
     token && (config.headers.Authorization = token)
     return config
   },

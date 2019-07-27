@@ -1,9 +1,10 @@
 <template>
   <div class="header">
     <div class="headContainer"  @click="toogleMenu">
-      <div class="icon" @click.stop="prompt">
-        <i class="status fa fa-bug" ref="status"></i>
-      </div>
+      <!--<div class="icon" @click.stop="prompt">-->
+        <!--<i class="status fa fa-bug" ref="status"></i>-->
+      <!--</div>-->
+      <User></User>
     </div>
     <transition-slide>
       <div class="menu" v-show="showMenu">
@@ -38,6 +39,7 @@
 
 <script>
 import TransitionSlide from 'components/Slide'
+import User from 'components/User'
 import { mapState } from 'vuex'
 
 export default {
@@ -73,16 +75,17 @@ export default {
   methods: {
     toogleMenu: function () {
       this.showMenu = !this.showMenu
-    },
-    prompt: function () {
-      this.$refs.status.style.fontSize = '22px'
-      setTimeout(() => {
-        this.$refs.status.style.fontSize = '18px'
-      }, 100)
     }
+    // prompt: function () {
+    //   this.$refs.status.style.fontSize = '22px'
+    //   setTimeout(() => {
+    //     this.$refs.status.style.fontSize = '18px'
+    //   }, 100)
+    // }
   },
   components: {
-    TransitionSlide
+    TransitionSlide,
+    User
   }
 }
 </script>
@@ -102,18 +105,6 @@ export default {
     margin: 0 auto
     width: 80%
     height:60px
-    .icon
-      position: absolute
-      top: 15px
-      right: 0
-      width: 30px
-      height: 30px
-      text-align: center
-      line-height: 30px
-      cursor: pointer
-      .status
-        vertical-align: middle
-        font-size: 18px
   .menu
     /*overflow: hidden*/
     background: $menuBgColor

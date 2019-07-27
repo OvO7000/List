@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <Header></Header>
-    <AddWork v-if="type==='work'"></AddWork>
-    <AddFigure v-else></AddFigure>
+    <AddWork v-if="type==='work' && level===2"></AddWork>
+    <AddFigure v-if="type==='figure' && level===2"></AddFigure>
     <router-view
       v-for="(info, index) in infos"
       :key="info.id"
@@ -15,8 +15,6 @@
 
 <script>
 import Header from 'components/Header'
-// import Item from 'components/Item'
-// import Test from 'components/Test'
 import AddWork from 'components/AddWork'
 import AddFigure from 'components/AddFigure'
 
@@ -33,11 +31,11 @@ export default {
     type () {
       return this.$route.path.split('/')[1]
     },
-    subType () {
-      return this.$route.path.split('/')[2]
-    },
     infos () {
       return this.$store.getters.info
+    },
+    level () {
+      return this.$store.state.user.level
     }
   },
   methods: {
@@ -70,8 +68,6 @@ export default {
   },
   components: {
     Header,
-    // Item,
-    // Test,
     AddWork,
     AddFigure
   }

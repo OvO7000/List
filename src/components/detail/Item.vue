@@ -7,7 +7,7 @@
       <Images :id="id"></Images>
     </div>
     <!--submit-->
-    <div class="btns">
+    <div class="btns" v-if="level===2">
       <div class="edit btn"  @click.stop="edit">
         <input type="submit" value="edit">
       </div>
@@ -39,6 +39,9 @@ export default {
   computed: {
     type () {
       return this.$route.path.split('/')[1]
+    },
+    level () {
+      return this.$store.state.user.level
     },
     rank () {
       let rank
