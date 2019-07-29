@@ -231,8 +231,8 @@ export default {
   div.v-dialog-container {
     /*width: 100%
     height: 100%*/
-    width: 0
-    height: 0
+    /*width: 0*/
+    /*height: 0*/
     position: fixed
     /*left: 0 top: 0*/
     z-index: 2000

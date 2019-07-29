@@ -4,6 +4,7 @@
         class="image"
         v-for="img in imgs"
         :key="img.id"
+        @click.stop="showPoster(img)"
       >
         <div class="inner">
           <img :src="img.compressed" :alt="img.title" :title="img.title">
@@ -24,6 +25,11 @@ export default {
   computed: {
     imgs () {
       return this.$store.getters.imgs(this.id)
+    }
+  },
+  methods: {
+    showPoster (img) {
+      this.$store.dispatch('setPoster', img.compressed)
     }
   }
 }

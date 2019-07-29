@@ -77,8 +77,8 @@ export default {
   inject: ['type'],
   data () {
     return {
-      // bodyHeight: 50,
-      // dialogTop: 0,
+      bodyHeight: 50,
+      dialogTop: 0,
       dialogZIndex: 0,
       backdropZIndex: 0,
       resizeTimeout: null,
@@ -91,6 +91,7 @@ export default {
      * backdrop click animate
      */
     outsideClick () {
+      console.log('close')
       this.closeDialog(true)
       // this.shake = true
       // setTimeout(() => {

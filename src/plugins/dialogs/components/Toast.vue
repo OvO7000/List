@@ -2,12 +2,12 @@
   <transition name="v-dialog--smooth" :appear="true">
     <div dialog="v-dialog" tabindex="-1"
          :class="['v-dialog', 'v-dialog-toast', toastPosition]"
-         :style="[{'z-index':dialogZIndex},dialogSize]" v-show="show">
+         :style="[{'z-index':dialogZIndex, height: height+'px'}]" v-show="show">
 
-      <div class="v-dialog-dialog" :style="{width:width+'px',height:height+'px',top:dialogTop+'px'}">
-        <div class="v-dialog-content">
+      <div class="v-dialog-dialog">
+        <div class="v-dialog-content" :style="{background:'#fff'}">
 
-          <div class="v-dialog-body" :style="{height:bodyHeight+'px'}">
+          <div class="v-dialog-body">
 
             <div :class="['v-dialog-toast__container', contentClass]">
               <button type="button" class="v-dialog-toast__close" v-if="dialogCloseButton"
@@ -72,10 +72,10 @@ export default {
     }
   },
   mounted () {
-    this.dialogSize = {
-      width: this.width + 'px',
-      height: this.height + 'px'
-    }
+    // this.dialogSize = {
+    //   width: this.width + 'px',
+    //   height: this.height + 'px'
+    // }
     this.bodyHeight = this.height
   }
 }

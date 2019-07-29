@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div dialog="v-dialog" tabindex="-1" :class="['v-dialog']"
+    <div dialog="v-dialog" tabindex="-1" :class="['v-dialog', 'v-dialog-my']"
          :style="[{'z-index':dialogZIndex}]" @click.self="outsideClick">
 
       <div class="v-dialog-dialog v-dialog-alert">

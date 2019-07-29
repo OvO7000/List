@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Header></Header>
+    <Poster v-if="poster.show"></Poster>
     <AddWork v-if="type==='work' && level===2"></AddWork>
     <AddFigure v-if="type==='figure' && level===2"></AddFigure>
     <router-view
@@ -17,6 +18,7 @@
 import Header from 'components/Header'
 import AddWork from 'components/AddWork'
 import AddFigure from 'components/AddFigure'
+import Poster from 'components/Poster'
 
 export default {
   name: 'home',
@@ -36,6 +38,9 @@ export default {
     },
     level () {
       return this.$store.state.user.level
+    },
+    poster () {
+      return this.$store.state.poster
     }
   },
   methods: {
@@ -61,15 +66,13 @@ export default {
           this.show = true
         }
       })
-    },
-    add () {
-
     }
   },
   components: {
     Header,
     AddWork,
-    AddFigure
+    AddFigure,
+    Poster
   }
 }
 </script>

@@ -88,6 +88,7 @@ export default {
       return {
         'v-dialog': true,
         'v-dialog-modal': true,
+        'v-dialog-my': true,
         // 'v-dialog--maximize': this.maximize,
         'v-dialog--buzz-out': this.shake
       }

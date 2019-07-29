@@ -21,7 +21,11 @@ export default new Vuex.Store({
       figure: {},
       work: {}
     },
-    edits: []
+    edits: [],
+    poster: {
+      image: '',
+      show: false
+    }
   },
   getters: {
     item: (state) => (id) => {
@@ -121,6 +125,11 @@ export default new Vuex.Store({
     logOut (state) {
       state.user.level = 0
       state.user.token = ''
+    },
+    setPoster (state, payload) {
+      payload.image && (state.poster.image = payload.image)
+
+      state.poster.show = payload.show
     }
   },
   actions: {
@@ -165,6 +174,17 @@ export default new Vuex.Store({
     deleteAll (context, id) {
       context.commit('delItem', id)
       context.commit('delEdit', id)
+    },
+    hidePoster (context) {
+      context.commit('setPoster', {
+        show: false
+      })
+    },
+    setPoster (context, image) {
+      context.commit('setPoster', {
+        image: image,
+        show: true
+      })
     }
   },
   plugins: [createPersistedState({ storage: window.sessionStorage })]
