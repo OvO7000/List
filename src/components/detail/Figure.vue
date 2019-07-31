@@ -13,6 +13,7 @@
         v-for="work in works"
         :key="work.id"
         :title="work.title"
+        @click="getWork(work.id)"
       >{{work.name}}</a>
     </div>
     <div class="works" v-else>
@@ -60,6 +61,20 @@ export default {
         return this.item.work
       }
       return false
+    }
+  },
+  methods: {
+    getWork (id) {
+      let payload = {
+        type: 'work',
+        id: id
+      }
+      this.$store.dispatch('getItem', payload).then((res) => {
+        let subType = this.$store.state.subType['work'].find((subType) => subType.id === res.subType)
+        this.$router.push('work', subType.name_en)
+      }).catch((err) => {
+        this.$dlg.toast(err)
+      })
     }
   }
 }

@@ -101,18 +101,41 @@ export default new Vuex.Store({
       let index = state.edits.findIndex(item => item.id === edit.id)
       state.edits.splice(index, 1, edit)
     },
+    // 插入 figure 或 work
     setItems (state, items) {
-      const route = state.route
-      if (!state.items[route.type][route.subType]) {
-        Vue.set(state.items[route.type], route.subType, [])
-      }
-      Vue.set(state.items[route.type], route.subType, items.concat(state.items[route.type][route.subType]))
+      items.forEach((item, index) => {
+        let route
+        if (state.subType['work'].find(subType => subType.id === item.subType)) {
+          route = {
+            type: 'work',
+            subType: state.subType['work'].find(subType => subType.id === item.subType).name_en
+          }
+        } else {
+          route = {
+            type: 'figure',
+            subType: state.subType['figure'].find(subType => subType.id === item.subType).name_en
+          }
+        }
+        if (!state.items[route.type][route.subType]) {
+          Vue.set(state.items[route.type], route.subType, [])
+        }
+        let _index = state.items[route.type][route.subType].findIndex(_item => _item.id === item.id)
+        if (_index < 0) {
+          if (route.type === 'work' && item.rank === true) {
+            state.items[route.type][route.subType].unshift(item)
+          } else {
+            // figure 或 rank === false 的 work
+            state.items[route.type][route.subType].push(item)
+          }
+        }
+      })
     },
     delItem (state, id) {
       const type = state.items[state.route.type][state.route.subType]
       const index = type.findIndex(item => item.id === id)
       type.splice(index, 1)
     },
+    // 设置 edit 后的 figure 或 work
     setItem (state, payload) {
       const type = state.items[state.route.type][state.route.subType]
       const index = type.findIndex(item => item.id === payload.id)
@@ -138,13 +161,29 @@ export default new Vuex.Store({
         context.commit('setSubType', res)
       })
     },
-    getItems (context) {
+    getItems (context, rank) {
       const route = context.state.route
 
       const id = context.state.subType[route.type].find(item => item.name_en === route.subType).id
-      const count = context.state.items[route.type][route.subType] ? context.state.items[route.type][route.subType].length : 0
-      api[route.type].index(id, count).then((res) => {
+      const items = context.state.items[route.type][route.subType]
+      let count = context.state.items[route.type][route.subType] ? context.state.items[route.type][route.subType].length : 0
+
+      // rank === true
+      if (route.type === 'work' && rank === 0) {
+        let rankItems = items.filter((item) => item.rank === true)
+        count = rankItems.length
+      } else if (route.type === 'work' && rank === 1) {
+        let rankItems = items.filter((item) => item.rank === false)
+        count = rankItems.length
+      }
+      api[route.type].index(id, count, rank).then((res) => {
         context.commit('setItems', res)
+      })
+    },
+    getItem (context, payload) {
+      return api[payload.type].single(payload.id).then((res) => {
+        context.commit('setItems', [res])
+        return Promise.resolve(res)
       })
     },
     setRoute (context, payload) {

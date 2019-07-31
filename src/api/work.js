@@ -10,14 +10,19 @@ const work = {
     return instance.patch(`/api/work/edit/${id}`, data)
   },
   // 列表
-  index (subType, count) {
+  index (subType, count, rank) {
     const config = {
       params: {
         count: count,
-        subType: subType
+        subType: subType,
+        rank: rank
       }
     }
     return instance.get(`/api/work/index`, config)
+  },
+  // 单个
+  single (id) {
+    return instance.get(`/api/work/single/${id}`)
   },
   // 删除
   del (id) {
