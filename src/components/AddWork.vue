@@ -22,7 +22,11 @@
 
           <!--info-->
           <div class="infos" v-if="sub.info">
-            <i class="icon fa fa-info-circle" @click.stop="addInfo(sub)"></i>
+            <Popover v-model="showPopper">
+              <div @click="showPopper = !showPopper">figure</div>
+              <div @click.stop="addInfo(sub)">info</div>
+              <i class="icon fa fa-info-circle" slot="reference"></i>
+            </Popover>
             <a
               class="info"
               v-for="(info, index) in sub.info"
@@ -103,11 +107,13 @@
 </template>
 
 <script>
+import Popover from 'components/Popover'
 export default {
   name: 'AddWork',
   data () {
     return {
       show: false,
+      showPopper: false,
       work: {
         rank: false,
         // adapt: [],
@@ -307,6 +313,9 @@ export default {
         e.target.style.opacity = '1'
       }
     }
+  },
+  components: {
+    Popover
   }
 }
 </script>
