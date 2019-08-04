@@ -11,18 +11,31 @@
         <span v-if="sub.originName"> ( {{sub.originName}} )</span>
       </div>
       <!--info-->
-      <div class="infos" v-if="sub.info">
-        <i class="icon fa fa-info-circle" @click.stop="addInfo(index)"></i>
-        <a
-          class="info"
-          v-for="(info, InfoIndex) in sub.info"
-          :key="info.name"
-          :title="info.title"
-          @click.stop="deleteInfo(index, InfoIndex)"
+      <div class="infos" v-if="sub.info || sub.figure">
+        <Popover v-model="showPopper">
+          <div @click.stop="linkFigure(index)">figure</div>
+          <div @click.stop="addInfo(index)">info</div>
+          <i class="icon fa fa-info-circle" slot="reference"></i>
+        </Popover>
+        <a class="figure"
+           v-for="(figure, figureIndex) in sub.figure"
+           :key="figure.id"
+           :title="figure.title"
+           @click.stop="deleteFigure(index, figureIndex)"
+        >{{figure.name}}</a>
+        <a class="info"
+           v-for="(info, infoIndex) in sub.info"
+           :key="info.name"
+           :title="info.title"
+           @click.stop="deleteInfo(index, infoIndex)"
         >{{info.name}}</a>
       </div>
       <div class="infos" v-else>
-        <i class="icon fa fa-question-circle" @click.stop="addInfo(index)"></i>
+        <Popover v-model="showPopper">
+          <div @click.stop="linkFigure(index)">figure</div>
+          <div @click.stop="addInfo(index)">info</div>
+          <i class="icon fa fa-question-circle" slot="reference"></i>
+        </Popover>
         <span class="info">no info</span>
       </div>
       <!--adapt-->
@@ -62,6 +75,8 @@
 </template>
 
 <script>
+import Popover from 'components/Popover'
+import LinkFigure from 'components/LinkFigure'
 export default {
   name: 'EWork',
   props: {
@@ -73,6 +88,11 @@ export default {
     //   type: Number,
     //   required: true
     // }
+  },
+  data () {
+    return {
+      showPopper: false
+    }
   },
   computed: {
     edit () {
@@ -124,6 +144,29 @@ export default {
         }
       })
     },
+    linkFigure (index) {
+      const edit = Object.assign({}, this.edit)
+
+      this.showPopper = false
+      this.$dlg.modal({
+        title: 'figure',
+        callback: (data) => {
+          if (!data.figure) return
+          if (!edit.item.sub[index].figure) {
+            this.$set(edit.item.sub[index], 'figure', [])
+          }
+          data.figure.map((item) => {
+            let figure = {
+              id: item.id,
+              title: item.title,
+              name: item.name
+            }
+            edit.item.sub[index].figure.push(figure)
+          })
+          this.$store.dispatch('setEdit', edit)
+        }
+      }, LinkFigure)
+    },
     addInfo (index) {
       const edit = Object.assign({}, this.edit)
       this.$dlg.modal({
@@ -151,6 +194,14 @@ export default {
       edit.item.sub[index].info.splice(infoIndex, 1)
       if (!edit.item.sub[index].info.length) {
         delete edit.item.sub[index].info
+      }
+      this.$store.dispatch('setEdit', edit)
+    },
+    deleteFigure (index, figureIndex) {
+      const edit = Object.assign({}, this.edit)
+      edit.item.sub[index].figure.splice(figureIndex, 1)
+      if (!edit.item.sub[index].figure.length) {
+        delete edit.item.sub[index].figure
       }
       this.$store.dispatch('setEdit', edit)
     },
@@ -204,6 +255,9 @@ export default {
         this.$store.dispatch('setEdit', edit)
       })
     }
+  },
+  components: {
+    Popover
   }
 }
 </script>
@@ -232,6 +286,7 @@ export default {
         margin-left: 20px
         font-size: 14px
         .info,
+        .figure,
         .adapt
           margin-left: 15px
           line-height: 25px

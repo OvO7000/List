@@ -27,15 +27,15 @@ export default {
     }
   },
   watch: {
-    value: {
-      immediate: true,
-      handler (val) {
+    value: function (val) {
+      if (val === false) {
         this.visible = val
-        this.$emit('input', val)
       }
     },
-    visible (val) {
-      this.$emit('input', val)
+    visible: function (val) {
+      if (val === true) {
+        this.$emit('input', val)
+      }
     }
   },
   methods: {

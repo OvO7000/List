@@ -69,9 +69,14 @@ export default new Vuex.Store({
       state.route.type = payload.type
       state.route.subType = payload.subType
     },
+    // 新增修改
+    // 将一个figure或work插入到edit数组中
     setEdits (state, id) {
       let edit
       let item = state.items[state.route.type][state.route.subType].find(item => item.id === id)
+
+      item = JSON.parse(JSON.stringify(item))
+      // item = Object.assign({}, item)
       if (state.route.type === 'work') {
         edit = {
           id: item.id,
@@ -97,6 +102,7 @@ export default new Vuex.Store({
     setUser (state, info) {
       state.user = info
     },
+    // 更新edit
     setEdit (state, edit) {
       let index = state.edits.findIndex(item => item.id === edit.id)
       state.edits.splice(index, 1, edit)
@@ -141,6 +147,7 @@ export default new Vuex.Store({
       const index = type.findIndex(item => item.id === payload.id)
       type.splice(index, 1, payload)
     },
+    // 删除edit
     delEdit (state, id) {
       const index = state.edits.findIndex(item => item.id === id)
       state.edits.splice(index, 1)

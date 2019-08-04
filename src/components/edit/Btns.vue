@@ -3,6 +3,9 @@
      <div class="save btn"  @click.stop="save">
        <input type="submit" value="save">
      </div>
+     <div class="cancel btn"  @click.stop="cancel">
+       <input type="submit" value="cancel">
+     </div>
      <div class="cancel btn"  @click.stop="deleteAll">
        <input type="submit" value="deleteAll">
      </div>
@@ -94,8 +97,16 @@ export default {
         { messageType: 'confirm' }
       )
     },
+    cancel () {
+      this.$store.dispatch('delEdit', this.id)
+    },
     save () {
-      this.$api.work.edit(this.id, this.edit.item).then(async (res) => {
+      let item = JSON.parse(JSON.stringify(this.edit.item))
+      item.sub = item.sub.map(sub => {
+        sub.figure && sub.figure.length && (sub.figure = sub.figure.map(figure => figure.id))
+        return sub
+      })
+      this.$api.work.edit(this.id, item).then(async (res) => {
         let imgsHandle = this.edit.imgs.map(async (img) => {
           // 新增图片，没有id，有file
           if (img.file && !img.id) {
@@ -104,11 +115,6 @@ export default {
             formData.append('sub', img.sub)
             let result = await this.$api.img.add(formData)
             return result
-            // })
-            // await this.$api.img.add(formData).then((res) => {
-            //   console.log(res)
-            //   return res
-            // })
           }
           // 修改图片，有id，有file
           if (img.file && img.id) {

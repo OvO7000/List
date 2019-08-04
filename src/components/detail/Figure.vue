@@ -71,7 +71,7 @@ export default {
       }
       this.$store.dispatch('getItem', payload).then((res) => {
         let subType = this.$store.state.subType['work'].find((subType) => subType.id === res.subType)
-        this.$router.push('work', subType.name_en)
+        this.$router.push(`/work/${subType.name_en}`)
       }).catch((err) => {
         this.$dlg.toast(err)
       })

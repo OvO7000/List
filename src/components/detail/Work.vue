@@ -12,8 +12,15 @@
           <span v-if="sub.originName"> ( {{sub.originName}} )</span>
         </div>
         <!--info-->
-        <div class="infos" v-if="sub.info">
+        <div class="infos" v-if="sub.info || sub.figure">
           <i class="icon fa fa-info-circle"></i>
+          <a
+            class="figure"
+            v-for="figure in sub.figure"
+            :key="figure.id"
+            :title="figure.title"
+            @click.stop="getFigure(figure.id)"
+          >{{figure.name}}</a>
           <a
             class="info"
             v-for="info in sub.info"
@@ -104,6 +111,18 @@ export default {
         icon,
         title
       }
+    },
+    getFigure (id) {
+      let payload = {
+        type: 'figure',
+        id: id
+      }
+      this.$store.dispatch('getItem', payload).then((res) => {
+        let subType = this.$store.state.subType['figure'].find((subType) => subType.id === res.subType)
+        this.$router.push(`/figure/${subType.name_en}`)
+      }).catch((err) => {
+        this.$dlg.toast(err)
+      })
     }
   }
 }
@@ -139,6 +158,7 @@ export default {
         margin-left: 20px
         font-size: 14px
         .info,
+        .figure,
         .adapt
           margin-left: 15px
           line-height: 25px

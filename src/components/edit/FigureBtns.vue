@@ -3,6 +3,9 @@
      <div class="save btn"  @click.stop="save">
        <input type="submit" value="save">
      </div>
+     <div class="cancel btn"  @click.stop="cancel">
+       <input type="submit" value="cancel">
+     </div>
      <div class="delete btn"  @click.stop="del">
        <input type="submit" value="delete">
      </div>
@@ -34,6 +37,9 @@ export default {
         },
         { messageType: 'confirm' }
       )
+    },
+    cancel () {
+      this.$store.dispatch('delEdit', this.id)
     },
     save () {
       const edit = this.edit

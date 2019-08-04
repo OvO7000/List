@@ -21,6 +21,7 @@ const work = {
     return instance.get(`/api/work/index`, config)
   },
   // 单个
+  // 传入id为sub的id
   single (id) {
     return instance.get(`/api/work/single/${id}`)
   },

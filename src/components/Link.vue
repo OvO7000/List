@@ -43,16 +43,16 @@
             </div>
             <!--tags-->
             <div class="tags">
-          <span v-if="sub.tag">
-            <span
-              class="tag"
-              v-for="(tag, tagIndex) in sub.tag"
-              :title="status(tag).title"
-              :key="tagIndex"
-            >
-              <i :class="['icon','fa',status(tag).icon]"></i>
-            </span>
-          </span>
+              <span v-if="sub.tag">
+                <span
+                  class="tag"
+                  v-for="(tag, tagIndex) in sub.tag"
+                  :title="status(tag).title"
+                  :key="tagIndex"
+                >
+                  <i :class="['icon','fa',status(tag).icon]"></i>
+                </span>
+              </span>
             </div>
           </div>
           <div class="image">

@@ -21,23 +21,33 @@
           </div>
 
           <!--info-->
-          <div class="infos" v-if="sub.info">
+          <div class="infos" v-if="sub.info || sub.figure">
             <Popover v-model="showPopper">
-              <div @click="showPopper = !showPopper">figure</div>
+              <div @click.stop="linkFigure(sub)">figure</div>
               <div @click.stop="addInfo(sub)">info</div>
               <i class="icon fa fa-info-circle" slot="reference"></i>
             </Popover>
             <a
+              class="figure"
+              v-for="(figure, index) in sub.figure"
+              :key="figure.id"
+              :title="figure.title"
+              @click.stop="deleteFigure(sub, index)"
+            >{{figure.name}}</a>
+            <a
               class="info"
               v-for="(info, index) in sub.info"
               :key="info.name"
-              :href="info.href"
               :title="info.title"
               @click.stop="deleteInfo(sub, index)"
             >{{info.name}}</a>
           </div>
           <div class="infos" v-else>
-            <i class="icon fa fa-question-circle" @click.stop="addInfo(sub)"></i>
+            <Popover v-model="showPopper">
+              <div @click="linkFigure(sub)">figure</div>
+              <div @click.stop="addInfo(sub)">info</div>
+              <i class="icon fa fa-question-circle" slot="reference"></i>
+            </Popover>
             <span class="info">no info</span>
           </div>
           <!--adapt-->
@@ -108,6 +118,7 @@
 
 <script>
 import Popover from 'components/Popover'
+import LinkFigure from 'components/LinkFigure'
 export default {
   name: 'AddWork',
   data () {
@@ -186,6 +197,7 @@ export default {
       })
     },
     addInfo (sub) {
+      this.showPopper = false
       this.$dlg.modal({
         title: 'info',
         params: {
@@ -206,11 +218,37 @@ export default {
         }
       })
     },
+    linkFigure (sub) {
+      this.showPopper = false
+      this.$dlg.modal({
+        title: 'figure',
+        callback: (data) => {
+          if (!data.figure) return
+          if (!sub.figure) {
+            this.$set(sub, 'figure', [])
+          }
+          data.figure.map((item) => {
+            let figure = {
+              id: item.id,
+              title: item.title,
+              name: item.name
+            }
+            sub.figure.push(figure)
+          })
+        }
+      }, LinkFigure)
+    },
     deleteInfo (sub, index) {
+      sub.info.splice(index, 1)
       if (sub.info.length === 0) {
-        this.delete(sub, 'info')
+        this.$delete(sub, 'info')
       }
-      this.$delete(sub.info, index)
+    },
+    deleteFigure (sub, index) {
+      sub.figure.splice(index, 1)
+      if (sub.figure.length === 0) {
+        this.$delete(sub, 'figure')
+      }
     },
     selectImg (e, subIndex) {
       this.$util.imgUploader().then((res) => {
@@ -361,6 +399,7 @@ export default {
             margin-left: 20px
             font-size: 14px
             .info,
+            .figure,
             .adapt
               margin-left: 15px
               line-height: 25px
