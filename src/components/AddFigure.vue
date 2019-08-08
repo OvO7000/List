@@ -185,8 +185,9 @@ export default {
     save () {
       const figure = this.figure
       figure.subType = this.$route.path.split('/')[2]
-      figure.work = figure.work.map(work => work.id)
+      figure.work && (figure.work = figure.work.map(work => work.id))
       this.$api.figure.add(this.figure).then((res) => {
+        this.$store.dispatch('setItems', [res])
         this.cancel()
       }).catch((err) => {
         this.$dlg.alert(err.msg)

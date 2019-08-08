@@ -73,7 +73,7 @@ export default {
         let subType = this.$store.state.subType['work'].find((subType) => subType.id === res.subType)
         this.$router.push(`/work/${subType.name_en}`)
       }).catch((err) => {
-        this.$dlg.toast(err)
+        this.$dlg.toast(err.msg)
       })
     }
   }

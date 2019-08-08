@@ -74,4 +74,6 @@ export default {
       padding: 10px
       background: #000
       border: 1px solid #000
+      div
+        white-space:nowrap
 </style>

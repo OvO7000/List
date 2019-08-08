@@ -53,16 +53,27 @@
           <!--adapt-->
           <div class="adaptContainer" v-if="!index">
             <div class="adapts" v-if="work.adapt">
-              <i class="icon fa fa-file"></i>
-              <a
-                class="adapt"
-                v-for="adapt in work.adapt"
-                :key="adapt.type"
-                :href="adapt.href"
-              >{{adapt.type}}</a>
+              <Popover v-model="showPopper">
+                <div @click.stop="setOrigin()" v-text="work.adapt.origin?'unset origin':'set origin'"></div>
+                <div @click.stop="removeFromAdapt()">remove from adapt</div>
+                <i class="icon fa fa-file" slot="reference"></i>
+              </Popover>
+              <span v-if="work.adapt.works">
+                <a
+                        class="adapt"
+                        v-for="adapt in work.adapt"
+                        :key="adapt.type"
+                        :href="adapt.href"
+                >{{adapt.type}}</a>
+              </span>
+              <span class="adapt" v-else>no adapt</span>
             </div>
             <div class="adapts" v-else>
-              <i class="icon fa fa-file-text"></i>
+              <Popover v-model="showPopper">
+                <div @click.stop="addAdapt()">add adapt</div>
+                <div @click.stop="linkAdapt()">add to adapt</div>
+                <i class="icon fa fa-file-text" slot="reference"></i>
+              </Popover>
               <span class="adapt">no adapt</span>
             </div>
           </div>
@@ -119,6 +130,7 @@
 <script>
 import Popover from 'components/Popover'
 import LinkFigure from 'components/LinkFigure'
+import LinkAdapt from 'components/LinkAdapt'
 export default {
   name: 'AddWork',
   data () {
@@ -244,6 +256,49 @@ export default {
         this.$delete(sub, 'info')
       }
     },
+    addAdapt () {
+      this.showPopper = false
+      this.$dlg.modal({
+        title: 'adapt',
+        params: {
+          name: ''
+        },
+        callback: (data) => {
+          if (!data || !data.name) return
+          if (!this.work.adapt) {
+            this.$set(this.work, 'adapt', {})
+          }
+          this.work.adapt.name = data.name
+          this.work.adapt.origin = false
+        }
+      })
+    },
+    linkAdapt () {
+      this.showPopper = false
+      this.$dlg.modal({
+        title: 'adapt',
+        callback: (data) => {
+          if (!data || !data.adapt) return
+          if (!this.work.adapt) {
+            this.$set(this.work, 'adapt', {})
+          }
+          this.work.adapt = data.adapt
+          this.work.adapt.origin = false
+        }
+      }, LinkAdapt)
+    },
+    removeFromAdapt () {
+      this.showPopper = false
+      this.$delete(this.work, 'adapt')
+    },
+    setOrigin () {
+      this.showPopper = false
+      if (!this.work.adapt) return
+      if (!this.work.adapt.origin) {
+        this.work.adapt.origin = true
+      }
+      this.work.adapt.origin = !this.work.adapt.origin
+    },
     deleteFigure (sub, index) {
       sub.figure.splice(index, 1)
       if (sub.figure.length === 0) {
@@ -277,6 +332,10 @@ export default {
       const work = this.work
       work.type = this.$route.path.split('/')[1]
       work.subType = this.$route.path.split('/')[2]
+      work.sub = work.sub.map(sub => {
+        sub.figure = sub.figure.map(figure => figure.id)
+        return sub
+      })
       this.$api.work.add(this.work).then((res) => {
         const formData = new FormData()
         this.imgs.forEach(item => {

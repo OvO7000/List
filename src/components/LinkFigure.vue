@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="image">
-            <div class="inner">
+            <div class="inner" v-if="figure.img">
               <img :src="figure.img.compressed" :alt="figure.name" :title="figure.name">
             </div>
           </div>
@@ -101,7 +101,7 @@ export default {
         this.$api.figure.query(this.text, this.selected).then((res) => {
           this.figures = res
         }).catch((err) => {
-          this.$dlg.toast(err)
+          this.$dlg.toast(err.msg)
         })
       }
     },

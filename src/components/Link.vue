@@ -126,7 +126,7 @@ export default {
         this.$api.sub.index(this.text, this.selected).then((res) => {
           this.subs = res
         }).catch((err) => {
-          this.$dlg.toast(err)
+          this.$dlg.toast(err.msg)
         })
       }
     },
