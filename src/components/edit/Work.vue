@@ -41,16 +41,26 @@
       <!--adapt-->
       <div class="adaptContainer" v-if="!index">
         <div class="adapts" v-if="edit.item.adapt">
-          <i class="icon fa fa-file"></i>
-          <a
-            class="adapt"
-            v-for="adapt in edit.item.adapt"
-            :key="adapt.type"
-            :href="adapt.href"
-          >{{adapt.type}}</a>
+          <Popover v-model="showPopper">
+            <div @click.stop="setOrigin()" v-text="edit.item.adapt.origin?'unset origin':'set origin'"></div>
+            <div @click.stop="removeFromAdapt()">remove from adapt</div>
+            <div @click.stop="setAdaptName()">set adapt name</div>
+            <i class="icon fa fa-file" slot="reference"></i>
+          </Popover>
+          <span v-if="edit.item.adapt.works">
+            <a class="adapt"
+               v-for="(adapt, adaptIndex) in edit.item.adapt.works"
+               :key="adaptIndex"
+            >{{adapt.subType.name}}</a>
+          </span>
+          <span class="adapt" v-else>no adapt</span>
         </div>
         <div class="adapts" v-else>
-          <i class="icon fa fa-file-text"></i>
+          <Popover v-model="showPopper">
+            <div @click.stop="addAdapt()">add adapt</div>
+            <div @click.stop="linkAdapt()">add to adapt</div>
+            <i class="icon fa fa-file-text" slot="reference"></i>
+          </Popover>
           <span class="adapt">no adapt</span>
         </div>
       </div>
@@ -77,6 +87,7 @@
 <script>
 import Popover from 'components/Popover'
 import LinkFigure from 'components/LinkFigure'
+import LinkAdapt from 'components/LinkAdapt'
 export default {
   name: 'EWork',
   props: {
@@ -117,7 +128,7 @@ export default {
       // 被选中 sub 在 selected 数组中的下标，用于从 selected 删除
       const id = this.edit.item.sub[index].id
       const i = this.edit.selected.indexOf(id)
-      const edit = Object.assign({}, this.edit)
+      let edit = JSON.parse(JSON.stringify(this.edit))
       if (i === -1) {
         edit.selected.push(id)
       } else {
@@ -126,7 +137,7 @@ export default {
       this.$store.dispatch('setEdit', edit)
     },
     editSubName (sub, index) {
-      const edit = Object.assign({}, this.edit)
+      let edit = JSON.parse(JSON.stringify(this.edit))
       this.$dlg.modal({
         title: 'sub',
         params: {
@@ -144,9 +155,85 @@ export default {
         }
       })
     },
+    addAdapt () {
+      this.showPopper = false
+      let edit = JSON.parse(JSON.stringify(this.edit))
+      this.$dlg.modal({
+        title: 'adapt',
+        params: {
+          name: ''
+        },
+        callback: (data) => {
+          if (!data || !data.name) return
+          this.$api.adapt.exist(data.name).then(res => {
+            if (!edit.item.adapt) {
+              edit.item.adapt = {}
+            }
+            edit.item.adapt.name = data.name
+            edit.item.adapt.origin = false
+            this.$store.dispatch('setEdit', edit)
+          }).catch(err => {
+            this.$dlg.toast(err.msg)
+          })
+        }
+      })
+    },
+    linkAdapt () {
+      this.showPopper = false
+      let edit = JSON.parse(JSON.stringify(this.edit))
+      this.$dlg.modal({
+        title: 'adapt',
+        callback: (data) => {
+          if (!data || !data.adapt) return
+          if (!edit.item.adapt) {
+            edit.item.adapt = {}
+          }
+          let index = data.adapt.works.findIndex(work => work.id === edit.id)
+          if (index >= 0) {
+            return
+          }
+          edit.item.adapt = data.adapt
+          this.$store.dispatch('setEdit', edit)
+        }
+      }, LinkAdapt)
+    },
+    removeFromAdapt () {
+      this.showPopper = false
+      let edit = JSON.parse(JSON.stringify(this.edit))
+      delete edit.item.adapt
+      this.$store.dispatch('setEdit', edit)
+    },
+    setAdaptName () {
+      this.showPopper = false
+      let edit = JSON.parse(JSON.stringify(this.edit))
+      this.$dlg.modal({
+        title: 'adapt',
+        params: {
+          name: ''
+        },
+        callback: (data) => {
+          if (!data || !data.name) return
+          this.$api.adapt.exist(data.name).then(res => {
+            edit.item.adapt.name = data.name
+            this.$store.dispatch('setEdit', edit)
+          }).catch(err => {
+            this.$dlg.toast(err.msg)
+          })
+        }
+      })
+    },
+    setOrigin () {
+      this.showPopper = false
+      let edit = JSON.parse(JSON.stringify(this.edit))
+      if (!edit.item.adapt) return
+      if (!edit.item.adapt.origin) {
+        edit.item.adapt.origin = true
+      }
+      edit.item.adapt.origin = !edit.item.adapt.origin
+      this.$store.dispatch('setEdit', edit)
+    },
     linkFigure (index) {
-      const edit = Object.assign({}, this.edit)
-
+      let edit = JSON.parse(JSON.stringify(this.edit))
       this.showPopper = false
       this.$dlg.modal({
         title: 'figure',
@@ -168,7 +255,8 @@ export default {
       }, LinkFigure)
     },
     addInfo (index) {
-      const edit = Object.assign({}, this.edit)
+      this.showPopper = false
+      let edit = JSON.parse(JSON.stringify(this.edit))
       this.$dlg.modal({
         title: 'info',
         params: {
@@ -190,7 +278,7 @@ export default {
       })
     },
     deleteInfo (index, infoIndex) {
-      const edit = Object.assign({}, this.edit)
+      let edit = JSON.parse(JSON.stringify(this.edit))
       edit.item.sub[index].info.splice(infoIndex, 1)
       if (!edit.item.sub[index].info.length) {
         delete edit.item.sub[index].info
@@ -198,7 +286,7 @@ export default {
       this.$store.dispatch('setEdit', edit)
     },
     deleteFigure (index, figureIndex) {
-      const edit = Object.assign({}, this.edit)
+      let edit = JSON.parse(JSON.stringify(this.edit))
       edit.item.sub[index].figure.splice(figureIndex, 1)
       if (!edit.item.sub[index].figure.length) {
         delete edit.item.sub[index].figure
@@ -206,7 +294,7 @@ export default {
       this.$store.dispatch('setEdit', edit)
     },
     tag (index, tag) {
-      const edit = Object.assign({}, this.edit)
+      let edit = JSON.parse(JSON.stringify(this.edit))
       if (!edit.item.sub[index].tag) {
         edit.item.sub[index].tag = []
       }
@@ -224,7 +312,7 @@ export default {
       this.$store.dispatch('setEdit', edit)
     },
     secret (e, index) {
-      const edit = Object.assign({}, this.edit)
+      let edit = JSON.parse(JSON.stringify(this.edit))
       if (edit.item.sub[index].secret === true) {
         edit.item.sub[index].secret = false
         e.target.style.opacity = '0.5'
@@ -235,8 +323,7 @@ export default {
       this.$store.dispatch('setEdit', edit)
     },
     selectImg (e, sub) {
-      const edit = Object.assign({}, this.edit)
-
+      let edit = JSON.parse(JSON.stringify(this.edit))
       this.$util.imgUploader().then((res) => {
         res.sub = sub.id
         const imgIndex = edit.imgs.findIndex((img) => img.sub === sub.id)

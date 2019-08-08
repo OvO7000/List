@@ -11,6 +11,11 @@ const sub = {
     }
     return instance.get(`/api/sub/index`, config)
   },
+  // 单个work
+  // 传入id为sub的id
+  single (id) {
+    return instance.get(`/api/sub/single/${id}`)
+  },
   // 保存
   add (data) {
     return instance.post(`/api/sub/add`, data)

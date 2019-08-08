@@ -56,15 +56,14 @@
               <Popover v-model="showPopper">
                 <div @click.stop="setOrigin()" v-text="work.adapt.origin?'unset origin':'set origin'"></div>
                 <div @click.stop="removeFromAdapt()">remove from adapt</div>
+                <div @click.stop="setAdaptName()">set adapt name</div>
                 <i class="icon fa fa-file" slot="reference"></i>
               </Popover>
               <span v-if="work.adapt.works">
-                <a
-                        class="adapt"
-                        v-for="adapt in work.adapt"
-                        :key="adapt.type"
-                        :href="adapt.href"
-                >{{adapt.type}}</a>
+                <a class="adapt"
+                   v-for="(adapt, adaptIndex) in work.adapt.works"
+                   :key="adaptIndex"
+                >{{adapt.subType.name}}</a>
               </span>
               <span class="adapt" v-else>no adapt</span>
             </div>
@@ -265,11 +264,16 @@ export default {
         },
         callback: (data) => {
           if (!data || !data.name) return
-          if (!this.work.adapt) {
-            this.$set(this.work, 'adapt', {})
-          }
-          this.work.adapt.name = data.name
-          this.work.adapt.origin = false
+          this.$api.adapt.exist(data.name).then(res => {
+            if (!this.work.adapt) {
+              this.$set(this.work, 'adapt', {})
+            }
+            this.work.adapt.name = data.name
+            this.work.adapt.origin = false
+          }).catch(err => {
+            console.log(err)
+            this.$dlg.toast(err.msg)
+          })
         }
       })
     },
@@ -290,6 +294,23 @@ export default {
     removeFromAdapt () {
       this.showPopper = false
       this.$delete(this.work, 'adapt')
+    },
+    setAdaptName () {
+      this.showPopper = false
+      this.$dlg.modal({
+        title: 'adapt',
+        params: {
+          name: ''
+        },
+        callback: (data) => {
+          if (!data || !data.name) return
+          this.$api.adapt.exist(data.name).then(res => {
+            this.work.adapt.name = data.name
+          }).catch(err => {
+            this.$dlg.toast(err.msg)
+          })
+        }
+      })
     },
     setOrigin () {
       this.showPopper = false
@@ -333,20 +354,24 @@ export default {
       work.type = this.$route.path.split('/')[1]
       work.subType = this.$route.path.split('/')[2]
       work.sub = work.sub.map(sub => {
-        sub.figure = sub.figure.map(figure => figure.id)
+        if (sub.figure) {
+          sub.figure = sub.figure.map(figure => figure.id)
+        }
         return sub
       })
       this.$api.work.add(this.work).then((res) => {
-        const formData = new FormData()
-        this.imgs.forEach(item => {
-          formData.append('imgs', item.file)
-          formData.append('ids[]', res[item.index])
-        })
-        this.$api.img.adds(formData).then((res) => {
-          this.cancel()
-        }).catch((err) => {
-          this.$dlg.alert(err.msg)
-        })
+        if (this.imgs && this.imgs.length) {
+          const formData = new FormData()
+          this.imgs.forEach(item => {
+            formData.append('imgs', item.file)
+            formData.append('ids[]', res[item.index])
+          })
+          this.$api.img.adds(formData).then((res) => {
+            this.cancel()
+          }).catch((err) => {
+            this.$dlg.alert(err.msg)
+          })
+        }
       }).catch((err) => {
         this.$dlg.alert(err.msg)
       })

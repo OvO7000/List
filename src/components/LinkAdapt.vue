@@ -4,7 +4,7 @@
         <input
           type="text"
           class="text"
-          @keyup.enter="getAdapt"
+          @keyup.enter="getAdapts"
           v-model.trim="text">
       </div>
       <div class="adapts">
@@ -19,18 +19,18 @@
             <div class="name">
               <span>{{adapt.name}}</span>
             </div>
-            <!--adpat-->
-            <div class="adpats" v-if="adpat.work">
-              <i class="icon fa fa-star"></i>
+            <!--adapt-->
+            <div class="works" v-if="adapt.works">
+              <i class="icon fa fa-file"></i>
               <a
                 class="work"
-                v-for="(work, workIndex) in adpat.work"
+                v-for="(work, workIndex) in adapt.works"
                 :key="workIndex"
                 :title="work.subType.name"
               >{{work.subType.name}}</a>
             </div>
             <div class="works" v-else>
-              <i class="icon fa fa-star-o"></i>
+              <i class="icon fa fa-file-text"></i>
               <span class="work">no work</span>
             </div>
           </div>
@@ -81,8 +81,9 @@ export default {
       }
       let item = {
         id: adapt.id,
-        work: adapt.work,
-        name: adapt.name
+        works: adapt.works,
+        name: adapt.name,
+        origin: adapt.origin
       }
       this.params.adapt = item
     },
@@ -103,14 +104,15 @@ export default {
   @import '~styles/variables.styl'
 
   .linkAdapt
+    width: 620px
     .options
       display: flex
       align-items: flex-start
       .text
-        width: 400px
+        width: 100%
         height: 24px
         font-size: 16px
-        margin: 25px 20px 0 0
+        margin: 25px 0 0
         color: #ccc
         text-align: center
         border: none

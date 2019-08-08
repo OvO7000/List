@@ -106,6 +106,9 @@ export default {
         sub.figure && sub.figure.length && (sub.figure = sub.figure.map(figure => figure.id))
         return sub
       })
+      if (item.adapt.works) {
+        delete item.adapt.works
+      }
       this.$api.work.edit(this.id, item).then(async (res) => {
         let imgsHandle = this.edit.imgs.map(async (img) => {
           // 新增图片，没有id，有file

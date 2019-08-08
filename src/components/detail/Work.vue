@@ -36,12 +36,13 @@
         <div class="adaptContainer" v-if="!index">
           <div class="adapts" v-if="item.adapt">
             <i class="icon fa fa-file"></i>
-            <a
-              class="adapt"
-              v-for="adapt in item.adapt"
-              :key="adapt.type"
-              :href="adapt.href"
-            >{{adapt.type}}</a>
+            <span v-if="item.adapt.works">
+              <a class="adapt"
+                 v-for="(adapt, adaptIndex) in item.adapt.works"
+                 :key="adaptIndex"
+              >{{adapt.subType.name}}</a>
+            </span>
+            <span class="adapt" v-else>no adapt</span>
           </div>
           <div class="adapts" v-else>
             <i class="icon fa fa-file-text"></i>

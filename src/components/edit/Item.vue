@@ -1,5 +1,5 @@
 <template>
-  <div class="item" @click="showSubItems">
+  <div class="item" @click.stop="showSubItems">
     <div class="container" ref="container">
       <!--<div class="rank" v-if="rank"><span>#{{index}}</span></div>-->
       <!--rank-->
@@ -65,8 +65,10 @@ export default {
       let height = getComputedStyle(this.$refs.container).height
       if (height === '130px') {
         this.$refs.container.style.height = 'auto'
+        this.$refs.container.style.overFlow = 'auto'
       } else {
         this.$refs.container.style.height = '130px'
+        this.$refs.container.style.overFlow = 'hidden'
       }
     },
     changeMode () {

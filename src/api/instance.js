@@ -33,9 +33,9 @@ instance.interceptors.response.use(
   error => {
     const { response } = error
     if (response && response.status === 403) {
-      store.commit('clearToken')
+      store.dispatch('logOut')
     }
-    return Promise.reject(response)
+    return Promise.reject(response.data)
   }
 )
 

@@ -4,6 +4,7 @@ import img from './img'
 import sub from './sub'
 import figure from './figure'
 import user from './user'
+import adapt from './adapt'
 
 export default {
   type,
@@ -11,5 +12,6 @@ export default {
   img,
   sub,
   figure,
-  user
+  user,
+  adapt
 }
