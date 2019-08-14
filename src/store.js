@@ -133,6 +133,8 @@ export default new Vuex.Store({
             // figure 或 rank === false 的 work
             state.items[route.type][route.subType].push(item)
           }
+        } else {
+          state.items[route.type][route.subType].splice(_index, 1, item)
         }
       })
     },
@@ -183,7 +185,7 @@ export default new Vuex.Store({
         let rankItems = items.filter((item) => item.rank === false)
         count = rankItems.length
       }
-      api[route.type].index(id, count, rank).then((res) => {
+      return api[route.type].index(id, count, rank).then((res) => {
         context.commit('setItems', res)
       })
     },
@@ -233,5 +235,13 @@ export default new Vuex.Store({
       })
     }
   },
-  plugins: [createPersistedState({ storage: window.sessionStorage })]
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+    reducer (val) {
+      return {
+        // user
+        user: val.user
+      }
+    }
+  })]
 })

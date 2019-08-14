@@ -1,5 +1,5 @@
 <template>
-  <div class="item" @click.stop="showSubItems">
+  <div class="item">
     <div class="container" ref="container">
       <!--<div class="rank" v-if="rank"><span>#{{index}}</span></div>-->
       <!--rank-->
@@ -90,13 +90,12 @@ export default {
   @import '~styles/variables.styl'
 
   .item
-    overflow: hidden
+    /*overflow: hidden*/
     &:hover
       background-color: $bgColor
     .container
       position: relative
       display: flex
       justify-content: center
-      height: 130px
       transition: all 2s
 </style>

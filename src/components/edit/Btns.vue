@@ -106,7 +106,7 @@ export default {
         sub.figure && sub.figure.length && (sub.figure = sub.figure.map(figure => figure.id))
         return sub
       })
-      if (item.adapt.works) {
+      if (item.adapt && item.adapt.works) {
         delete item.adapt.works
       }
       this.$api.work.edit(this.id, item).then(async (res) => {
@@ -140,8 +140,15 @@ export default {
         let result = await Promise.all(imgsHandle)
 
         this.edit.item.imgs = result.filter(item => item instanceof Object)
-        this.$store.dispatch('setItem', this.edit.item)
-        this.$store.dispatch('delEdit', this.edit.id)
+
+        this.$api.work.single(item.id).then(res => {
+          this.$store.dispatch('setItem', res)
+          this.$store.dispatch('delEdit', item.id)
+        }).catch(err => {
+          this.$dlg.toast(err.msg)
+        })
+      }).catch(err => {
+        this.$dlg.toast(err.msg)
       })
     }
   }

@@ -371,6 +371,8 @@ export default {
           }).catch((err) => {
             this.$dlg.alert(err.msg)
           })
+        } else {
+          this.cancel()
         }
       }).catch((err) => {
         this.$dlg.alert(err.msg)

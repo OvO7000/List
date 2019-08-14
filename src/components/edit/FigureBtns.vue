@@ -46,8 +46,14 @@ export default {
       edit.item.work = edit.item.work.map(work => work.id)
       this.$api.figure.edit(edit.id, edit.item).then(async (res) => {
         edit.item.imgs = edit.imgs
-        this.$store.dispatch('setItem', this.edit.item)
-        this.$store.dispatch('delEdit', edit.id)
+        this.$api.figure.single(edit.id).then(res => {
+          this.$store.dispatch('setItem', res)
+          this.$store.dispatch('delEdit', edit.id)
+        }).catch(err => {
+          this.$dlg.toast(err.msg)
+        })
+      }).catch(err => {
+        this.$dlg.toast(err.msg)
       })
     }
   }

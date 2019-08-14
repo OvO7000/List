@@ -58,7 +58,7 @@
           </div>
           <div class="image">
             <div class="inner" v-if="figure.img">
-              <img :src="figure.img.compressed" :alt="figure.name" :title="figure.name">
+              <img :src="figure.img.resized" :alt="figure.name" :title="figure.name">
             </div>
           </div>
         </div>

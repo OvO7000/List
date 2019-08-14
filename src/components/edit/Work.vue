@@ -326,6 +326,7 @@ export default {
       let edit = JSON.parse(JSON.stringify(this.edit))
       this.$util.imgUploader().then((res) => {
         res.sub = sub.id
+        res.sort = sub.sort
         const imgIndex = edit.imgs.findIndex((img) => img.sub === sub.id)
         const img = edit.imgs.find((img) => img.sub === sub.id)
         if (img) {
@@ -337,7 +338,12 @@ export default {
         } else {
           // sub没有图片, 则新增图片
           edit.imgs.push(res)
-          edit.imgs.sort((a, b) => a.sub - b.sub)
+          edit.imgs.sort((a, b) => {
+            let aSort = edit.item.sub.find(item => a.sub === item.id).sort
+            let bSort = edit.item.sub.find(item => b.sub === item.id).sort
+            console.log(aSort, bSort)
+            return aSort - bSort
+          })
         }
         this.$store.dispatch('setEdit', edit)
       })

@@ -5,7 +5,7 @@
       v-for="(img, index) in edit.imgs"
       :key="index"
     >
-      <div class="inner">
+      <div class="inner" v-if="img.base64 || img.resized">
         <div
           class="mask"
           @click="deleteImg(img, index)"
@@ -14,7 +14,7 @@
           <i class="fa fa-times"></i>
           <div></div>
         </div>
-        <img :src="img.base64 || img.compressed">
+        <img :src="img.base64 || img.resized">
       </div>
     </div>
   </div>
@@ -63,11 +63,11 @@ export default {
     align-content: flex-start
     .image
       flex: 0 0 auto
-      width: 220px
       height: $itemHeight
       .inner
         position: relative
         overflow: hidden
+        width: 220px
         height: $itemHeight - 10
         margin: 5px 0
         &:hover

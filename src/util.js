@@ -2,8 +2,6 @@
  * 上传图片
  */
 const imgUploader = () => {
-  console.log('img')
-
   let fileInput = document.createElement('input')
   fileInput.type = 'file'
   fileInput.style.display = 'none'
@@ -14,24 +12,34 @@ const imgUploader = () => {
     fileInput.addEventListener('change', () => {
       // 检查文件是否选择:
       if (!fileInput.value) {
-        reject(new Error('没有选择文件'))
+        const err = new Error()
+        err.msg = '没有选择文件'
+        reject(err)
       }
       const img = fileInput.files[0]
       var size = img.size
       // 判断文件大小
-      if (size >= 2 * 1024 * 1024) {
-        reject(new Error('文件大于2兆'))
+      if (size >= 10 * 1024 * 1024) {
+        const err = new Error()
+        err.msg = '文件大于10兆'
+        reject(err)
       }
       // 判断类型
       if (img.type !== 'image/jpeg' && img.type !== 'image/png' && img.type !== 'image/gif') {
-        reject(new Error('不是有效的图片文件'))
+        const err = new Error()
+        err.msg = '不是有效的图片文件'
+        reject(err)
       }
       const reader = new FileReader()
       let base
       reader.onload = (e) => {
         base = e.target.result
 
-        if (!base) reject(new Error('获取预览失败'))
+        if (!base) {
+          const err = new Error()
+          err.msg = '获取预览失败'
+          reject(err)
+        }
         resolve({
           file: img,
           base64: base

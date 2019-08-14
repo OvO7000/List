@@ -1,47 +1,47 @@
 <template>
-    <div class="linkAdapt">
-      <div class="options">
-        <input
-          type="text"
-          class="text"
-          @keyup.enter="getAdapts"
-          v-model.trim="text">
-      </div>
-      <div class="adapts">
-        <div
-          v-for="(adapt, adaptIndex) in adapts"
-          :key="adaptIndex"
-          @click.stop="setAdapt(adapt)"
-          :class="['adapt',{'selected':isSelected(adapt)}]"
-        >
-          <div class="content">
-            <!--name-->
-            <div class="name">
-              <span>{{adapt.name}}</span>
-            </div>
-            <!--adapt-->
-            <div class="works" v-if="adapt.works">
-              <i class="icon fa fa-file"></i>
-              <a
-                class="work"
-                v-for="(work, workIndex) in adapt.works"
-                :key="workIndex"
-                :title="work.subType.name"
-              >{{work.subType.name}}</a>
-            </div>
-            <div class="works" v-else>
-              <i class="icon fa fa-file-text"></i>
-              <span class="work">no work</span>
-            </div>
+  <div class="linkAdapt">
+    <div class="options">
+      <input
+        type="text"
+        class="text"
+        @keyup.enter="getAdapts"
+        v-model.trim="text">
+    </div>
+    <div class="adapts">
+      <div
+        v-for="(adapt, adaptIndex) in adapts"
+        :key="adaptIndex"
+        @click.stop="setAdapt(adapt)"
+        :class="['adapt',{'selected':isSelected(adapt)}]"
+      >
+        <div class="content">
+          <!--name-->
+          <div class="name">
+            <span>{{adapt.name}}</span>
           </div>
-          <div class="image">
-            <div class="inner" v-if="adapt.img">
-              <img :src="adapt.img.compressed" :alt="adapt.name" :title="adapt.name">
-            </div>
+          <!--adapt-->
+          <div class="works" v-if="adapt.works">
+            <i class="icon fa fa-file"></i>
+            <a
+              class="work"
+              v-for="(work, workIndex) in adapt.works"
+              :key="workIndex"
+              :title="work.subType.name"
+            >{{work.subType.name}}</a>
+          </div>
+          <div class="works" v-else>
+            <i class="icon fa fa-file-text"></i>
+            <span class="work">no work</span>
+          </div>
+        </div>
+        <div class="image">
+          <div class="inner" v-if="adapt.img">
+            <img :src="adapt.img.resized" :alt="adapt.name" :title="adapt.name">
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
