@@ -91,7 +91,6 @@ export default {
      * backdrop click animate
      */
     outsideClick () {
-      console.log('close')
       this.closeDialog(true)
       // this.shake = true
       // setTimeout(() => {

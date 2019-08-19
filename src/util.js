@@ -16,8 +16,8 @@ const imgUploader = () => {
         err.msg = '没有选择文件'
         reject(err)
       }
-      const img = fileInput.files[0]
-      var size = img.size
+      let img = fileInput.files[0]
+      let size = img.size
       // 判断文件大小
       if (size >= 10 * 1024 * 1024) {
         const err = new Error()

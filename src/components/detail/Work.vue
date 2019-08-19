@@ -39,6 +39,7 @@
             <span v-if="item.adapt.works">
               <a class="adapt"
                  v-for="(adapt, adaptIndex) in item.adapt.works"
+                 @click.stop="getWork(adapt.id)"
                  :key="adaptIndex"
               >{{adapt.subType.name}}</a>
             </span>
@@ -121,6 +122,18 @@ export default {
       this.$store.dispatch('getItem', payload).then((res) => {
         let subType = this.$store.state.subType['figure'].find((subType) => subType.id === res.subType)
         this.$router.push(`/figure/${subType.name_en}`)
+      }).catch((err) => {
+        this.$dlg.toast(err.msg)
+      })
+    },
+    getWork (id) {
+      let payload = {
+        type: 'work',
+        id: id
+      }
+      this.$store.dispatch('getItem', payload).then((res) => {
+        let subType = this.$store.state.subType['work'].find((subType) => subType.id === res.subType)
+        this.$router.push(`/work/${subType.name_en}`)
       }).catch((err) => {
         this.$dlg.toast(err.msg)
       })

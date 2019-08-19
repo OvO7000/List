@@ -82,7 +82,6 @@ export default {
       let scrollHeight = document.documentElement.clientHeight || document.body.scrollHeight
       // 向下滚动
       if (!this.loading && e.deltaY > 0 && (scrollTop + scrollHeight >= innerHeight)) {
-        console.log('b')
         this.loading = true
         this.loadingBottom = true
         this.$store.dispatch('getItems', 1).then(() => {
@@ -94,11 +93,9 @@ export default {
           this.$dlg.toast(err.msg)
         })
       } else if (!this.loading && e.deltaY < 0 && scrollTop === 0) {
-        console.log('top')
         this.loading = true
         this.loadingTop = true
         this.$store.dispatch('getItems', 0).then(() => {
-          console.log('result')
           this.loadingTop = false
           setTimeout(function () { that.loading = false }, 2000)
         }).catch(err => {

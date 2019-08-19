@@ -190,7 +190,7 @@ export default {
           }
           let index = data.adapt.works.findIndex(work => work.id === edit.id)
           if (index >= 0) {
-            return
+            data.adapt.works.splice(index, 1)
           }
           edit.item.adapt = data.adapt
           this.$store.dispatch('setEdit', edit)
@@ -323,10 +323,9 @@ export default {
       this.$store.dispatch('setEdit', edit)
     },
     selectImg (e, sub) {
-      let edit = JSON.parse(JSON.stringify(this.edit))
+      let edit = this.edit
       this.$util.imgUploader().then((res) => {
         res.sub = sub.id
-        res.sort = sub.sort
         const imgIndex = edit.imgs.findIndex((img) => img.sub === sub.id)
         const img = edit.imgs.find((img) => img.sub === sub.id)
         if (img) {
@@ -341,7 +340,6 @@ export default {
           edit.imgs.sort((a, b) => {
             let aSort = edit.item.sub.find(item => a.sub === item.id).sort
             let bSort = edit.item.sub.find(item => b.sub === item.id).sort
-            console.log(aSort, bSort)
             return aSort - bSort
           })
         }

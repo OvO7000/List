@@ -25,13 +25,10 @@ export default {
     }
   },
   mounted () {
-    console.log('test')
     let screenHeight = window.innerHeight
     let image = this.$refs.image
     image.onload = () => {
-      console.log(image)
       let imgHeight = image.offsetHeight
-      console.log(imgHeight)
       if (imgHeight > screenHeight - 120) {
         image.style.height = (screenHeight - 120) + 'px'
       }

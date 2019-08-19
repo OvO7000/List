@@ -82,9 +82,9 @@ export default {
       let item = {
         id: adapt.id,
         works: adapt.works,
-        name: adapt.name,
-        origin: adapt.origin
+        name: adapt.name
       }
+      adapt.origin && (item.origin = adapt.origin)
       this.params.adapt = item
     },
     isSelected (adapt) {

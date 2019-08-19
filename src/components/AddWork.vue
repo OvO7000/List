@@ -271,7 +271,6 @@ export default {
             this.work.adapt.name = data.name
             this.work.adapt.origin = false
           }).catch(err => {
-            console.log(err)
             this.$dlg.toast(err.msg)
           })
         }
