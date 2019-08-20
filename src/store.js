@@ -126,15 +126,14 @@ export default new Vuex.Store({
           Vue.set(state.items[route.type], route.subType, [])
         }
         let _index = state.items[route.type][route.subType].findIndex(_item => _item.id === item.id)
-        if (_index < 0) {
-          if (route.type === 'work' && item.rank === true) {
-            state.items[route.type][route.subType].unshift(item)
-          } else {
-            // figure 或 rank === false 的 work
-            state.items[route.type][route.subType].push(item)
-          }
+        if (_index >= 0) {
+          state.items[route.type][route.subType].splice(_index, 1)
+        }
+        if (route.type === 'work' && item.rank === true) {
+          state.items[route.type][route.subType].unshift(item)
         } else {
-          state.items[route.type][route.subType].splice(_index, 1, item)
+          // figure 或 rank === false 的 work
+          state.items[route.type][route.subType].push(item)
         }
       })
     },
@@ -176,14 +175,14 @@ export default new Vuex.Store({
       const id = context.state.subType[route.type].find(item => item.name_en === route.subType).id
       const items = context.state.items[route.type][route.subType]
       let count = context.state.items[route.type][route.subType] ? context.state.items[route.type][route.subType].length : 0
-
+      count = count > 1 ? count - 1 : 0
       // rank === true
       if (route.type === 'work' && rank === 0) {
-        let rankItems = items.filter((item) => item.rank === true)
-        count = rankItems.length
+        let rankItems = items.filter((item) => item.rank === true) || 0
+        count = rankItems.length > 1 ? rankItems.length - 1 : 0
       } else if (route.type === 'work' && rank === 1) {
-        let rankItems = items.filter((item) => item.rank === false)
-        count = rankItems.length
+        let rankItems = items.filter((item) => item.rank === false) || 0
+        count = rankItems.length > 1 ? rankItems.length - 1 : 0
       }
       return api[route.type].index(id, count, rank).then((res) => {
         context.commit('setItems', res)

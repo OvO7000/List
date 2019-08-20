@@ -138,7 +138,6 @@ export default {
       showPopper: false,
       work: {
         rank: false,
-        // adapt: [],
         sub: []
       },
       imgs: [],
@@ -381,9 +380,10 @@ export default {
       this.show = false
       this.work = {
         rank: false,
-        name: '',
         sub: []
       }
+      this.imgs = []
+      this.selected = []
     },
     select (index) {
       // 被选中 sub 在 selected 数组中的下标，用于从 selected 删除

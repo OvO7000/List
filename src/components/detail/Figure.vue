@@ -66,7 +66,7 @@ export default {
   methods: {
     getWork (id) {
       let payload = {
-        type: 'work',
+        type: 'sub',
         id: id
       }
       this.$store.dispatch('getItem', payload).then((res) => {
