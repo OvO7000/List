@@ -1,5 +1,5 @@
 <template>
-  <div class="user" @click.stop="login" @dbclick.stop="logout">
+  <div class="user" @click.stop="login">
     <i :class="['status', 'fa', icon]" ref="status"></i>
   </div>
 </template>
@@ -38,9 +38,6 @@ export default {
           }
         })
       }
-    },
-    logout () {
-
     }
   }
 }

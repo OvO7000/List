@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    delete () {
+    del () {
       this.$dlg.alert(
         '确认删除？',
         () => {

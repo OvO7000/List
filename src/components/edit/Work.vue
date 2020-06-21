@@ -71,7 +71,7 @@
             <i title="not perfect complete" class="tag fa fa-tasks" :style="{'opacity': hasTag(sub, 1)}" @click.stop="tag(index, 1)"></i>
             <i title="rotten" class="tag fa fa-star-half-o" :style="{'opacity': hasTag(sub, 2)}" @click.stop="tag(index, 2)"></i>
             <i title="serials" class="tag fa fa-pencil" :style="{'opacity': hasTag(sub, 3)}" @click.stop="tag(index, 3)"></i>
-            <i title="secret" class="tag fa fa-eye-slash" @click.stop="secret($event, index)"></i>
+            <i title="secret" class="tag fa fa-eye-slash" :style="{'opacity': sub.secret?1:0.5}" @click.stop="secret($event, index)"></i>
           </span>
         <span>
             <i
@@ -228,8 +228,9 @@ export default {
       if (!edit.item.adapt) return
       if (!edit.item.adapt.origin) {
         edit.item.adapt.origin = true
+      } else {
+        edit.item.adapt.origin = !edit.item.adapt.origin
       }
-      edit.item.adapt.origin = !edit.item.adapt.origin
       this.$store.dispatch('setEdit', edit)
     },
     linkFigure (index) {

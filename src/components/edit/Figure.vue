@@ -67,7 +67,7 @@ export default {
         title: 'figure',
         params: {
           name: edit.item.name,
-          originName: edit.item.name || ''
+          originName: edit.item.originName || ''
         },
         callback: (data) => {
           if (!data.name) return
@@ -96,7 +96,7 @@ export default {
               name: item.name
             }
             let img = {
-              compressed: item.img,
+              resized: item.img,
               work: item.id
             }
             edit.item.work.push(work)

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import api from 'api/index'
+import router from './router'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,6 @@ export default new Vuex.Store({
       token: ''
     },
     route: {
-      id: '',
       type: '',
       subType: ''
     },
@@ -157,6 +157,17 @@ export default new Vuex.Store({
       state.user.level = 0
       state.user.token = ''
     },
+    initState (state) {
+      state.items = {
+        figure: {},
+        work: {}
+      }
+      state.edits = []
+      state.poster = {
+        image: '',
+        show: false
+      }
+    },
     setPoster (state, payload) {
       payload.image && (state.poster.image = payload.image)
 
@@ -173,7 +184,7 @@ export default new Vuex.Store({
       const route = context.state.route
 
       const id = context.state.subType[route.type].find(item => item.name_en === route.subType).id
-      const items = context.state.items[route.type][route.subType]
+      const items = context.state.items[route.type][route.subType] || []
       let count = context.state.items[route.type][route.subType] ? context.state.items[route.type][route.subType].length : 0
       count = count > 1 ? count - 1 : 0
       // rank === true
@@ -200,11 +211,44 @@ export default new Vuex.Store({
     getUser (context, payload) {
       api.user.login(payload).then((res) => {
         context.commit('setUser', res)
-        context.dispatch('getType')
+        context.commit('initState')
+        context.dispatch('getType').then(() => {
+          let type = context.state.route.type
+          let subType = context.state.route.subType
+          if (!context.state.items[type][subType] || context.state.items[type][subType].length === 0) {
+            context.dispatch('getItems', 2)
+          }
+        })
       })
     },
     logOut (context) {
       context.commit('logOut')
+      context.commit('initState')
+      context.dispatch('getType').then(() => {
+        let type = context.state.route.type
+        let subType = context.state.route.subType
+        let route = {}
+        if (!context.state.subType[type] || !context.state.subType[type].find(item => item.name_en === subType)) {
+          // 没有权限的路由，使用默认路由
+          type = 'work'
+          subType = context.state.subType['work'][0].name_en
+          route = {
+            type,
+            subType
+          }
+          router.push(`/work/${subType}`)
+          context.dispatch('setRoute', route).then(() => {
+            // 检查 item 是否已存在
+            if (!context.state.items[type][subType] || context.state.items[type][subType].length === 0) {
+              context.dispatch('getItems', 2)
+            }
+          })
+        } else {
+          if (!context.state.items[type][subType] || context.state.items[type][subType].length === 0) {
+            context.dispatch('getItems', 2)
+          }
+        }
+      })
     },
     setEdits (context, id) {
       context.commit('setEdits', id)

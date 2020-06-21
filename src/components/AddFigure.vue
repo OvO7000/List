@@ -187,7 +187,11 @@ export default {
       figure.subType = this.$route.path.split('/')[2]
       figure.work && (figure.work = figure.work.map(work => work.id))
       this.$api.figure.add(this.figure).then((res) => {
-        this.$store.dispatch('setItems', [res])
+        this.$api.figure.single(res).then(res => {
+          this.$store.dispatch('setItem', res)
+        }).catch(err => {
+          this.$dlg.toast(err.msg)
+        })
         this.cancel()
       }).catch((err) => {
         this.$dlg.alert(err.msg)

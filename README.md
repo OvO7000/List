@@ -1,29 +1,7 @@
 # list
 
-## Project setup
-```
-npm install
-```
+这是一个做出来给自己用的小工具，主要是记录一下自己看过的一些东西，同时也练习一下 Vue 框架。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+关于技术栈，前端用到了 Vue 全家桶，从 Vue 到 vuex，后端使用了 node.js 和 MongoDB。
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+最后部署在了阿里云的服务器上，可以通过[这里][http://blog.ovo7.cn]访问，当然游客只能浏览。

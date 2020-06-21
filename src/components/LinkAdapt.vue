@@ -36,7 +36,7 @@
         </div>
         <div class="image">
           <div class="inner" v-if="adapt.img">
-            <img :src="adapt.img.resized" :alt="adapt.name" :title="adapt.name">
+            <img :src="adapt.img" :alt="adapt.name" :title="adapt.name">
           </div>
         </div>
       </div>

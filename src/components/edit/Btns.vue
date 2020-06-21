@@ -48,6 +48,7 @@ export default {
           sub.name = data.name
           sub.originName = data.originName
           sub.secret = false
+          sub.sort = edit.item.sub.length
           if (sub.originName === '') {
             delete sub.originName
           }
@@ -101,7 +102,7 @@ export default {
       this.$store.dispatch('delEdit', this.id)
     },
     save () {
-      let item = JSON.parse(JSON.stringify(this.edit.item))
+      let item = this.edit.item
       item.sub = item.sub.map(sub => {
         sub.figure && sub.figure.length && (sub.figure = sub.figure.map(figure => figure.id))
         return sub

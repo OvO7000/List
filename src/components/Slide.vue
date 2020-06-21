@@ -14,7 +14,6 @@ export default {
   name: 'TransitionSlide',
   methods: {
     enter (element) {
-      console.log('slide')
       const width = getComputedStyle(element).width
 
       element.style.width = width

@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     workType () {
-      return this.$store.state.subType.work
+      return store.state.subType.work
     }
   },
   methods: {
